@@ -52,6 +52,12 @@ input[type=text] {
   border: 1px solid #ccc;
   border-radius: 3px;
 }
+select{
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 12px;
+  border: 1px solid #ccc;
+}
 
 label {
   margin-bottom: 10px;
@@ -141,7 +147,7 @@ span.price {
             <label  for="ccnum">Credit card number</label>
             <input required type="text" id="ccnum" name="cardnumber" placeholder="1111-2222-3333-4444">
             <label for="expmonth">Exp Month</label>
-            <select required id="expmonth" name="expmonth" >
+            <select style="display: inline-block;" required id="expmonth" name="expmonth" >
             	<option value = "January">January</option>
             	<option value = "February">February</option>
             	<option value = "March">March</option>

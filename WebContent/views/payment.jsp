@@ -106,23 +106,23 @@ span.price {
         <div class="row">
           <div class="col-50">
             <h3>Billing Address</h3>
-            <label for="fname"><i class="fa fa-user"></i> Full Name</label>
-            <input type="text" id="fname" name="firstname" placeholder="Name" value="<%= aam.getFull_name()%>">
+            <label for="fname"><i class="fa fa-user" ></i> Full Name</label>
+            <input type="text" id="fname" name="firstname"  disabled = "disabled"  value="<%= aam.getFull_name()%>">
             <label for="email"><i class="fa fa-envelope"></i> Email</label>
-            <input type="text" id="email" name="email" placeholder="abc@gmail.com" value="<%= aam.getEmailAddress()%>">
+            <input type="text" id="email" name="email" disabled = "disabled" value="<%= aam.getEmailAddress()%>">
             <label for="adr"><i class="fa fa-address-card-o"></i> Address</label>
-            <input type="text" id="adr" name="address" placeholder="Lal Bazar" value="<%= aam.getAddress()%>">
+            <input type="text" id="adr" name="address" disabled = "disabled"  value="<%= aam.getAddress()%>">
             <label for="city"><i class="fa fa-institution"></i> City</label>
-            <input type="text" id="city" name="city" placeholder="Srinagar" value="<%= aam.getDistrict()%>">
+            <input type="text" id="city" name="city"  disabled = "disabled" value="<%= aam.getDistrict()%>">
 
             <div class="row">
               <div class="col-50">
                 <label for="state">State</label>
-                <input type="text" id="state" name="state" placeholder="J&K" value="<%= aam.getState()%>">
+                <input type="text" id="state" name="state" disabled = "disabled" value="<%= aam.getState()%>">
               </div>
               <div class="col-50">
                 <label for="zip">Pin</label>
-                <input type="text" id="Pin" name="Pin" placeholder="190011" value="<%= aam.getPostal_code()%>">
+                <input type="text" id="Pin" name="Pin" disabled = "disabled" value="<%= aam.getPostal_code()%>">
               </div>
             </div>
           </div>
@@ -136,12 +136,12 @@ span.price {
               <i class="fa fa-cc-mastercard" style="color:red;"></i>
               <i class="fa fa-cc-discover" style="color:orange;"></i>
             </div>
-            <label for="cname">Name on Card</label>
-            <input type="text" id="cname" name="cardname" placeholder="Farzana Minaam Rukhsana">
-            <label for="ccnum">Credit card number</label>
-            <input type="text" id="ccnum" name="cardnumber" placeholder="1111-2222-3333-4444">
+            <label  for="cname">Name on Card</label>
+            <input required type="text" id="cname" name="cardname" placeholder="Farzana Minaam Rukhsana">
+            <label  for="ccnum">Credit card number</label>
+            <input required type="text" id="ccnum" name="cardnumber" placeholder="1111-2222-3333-4444">
             <label for="expmonth">Exp Month</label>
-            <select id="expmonth" name="expmonth" >
+            <select required id="expmonth" name="expmonth" >
             	<option value = "January">January</option>
             	<option value = "February">February</option>
             	<option value = "March">March</option>
@@ -159,19 +159,17 @@ span.price {
             <div class="row">
               <div class="col-50">
                 <label for="expyear">Exp Year</label>
-                <input type="text" id="expyear" name="expyear" placeholder="2018">
+                <input required type="text" id="expyear" name="expyear" placeholder="2018">
               </div>
               <div class="col-50">
                 <label for="cvv">CVV</label>
-                <input type="text" id="cvv" name="cvv" placeholder="352">
+                <input required type="text" id="cvv" name="cvv" placeholder="352">
               </div>
             </div>
           </div>
 
         </div>
-        <label>
-          <input type="checkbox" checked="checked" name="sameadr"> Shipping address same as billing
-        </label>
+       
         <input type="submit" value="Continue to checkout" class="btn">
       </form>
     </div>

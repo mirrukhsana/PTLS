@@ -52,6 +52,7 @@ public class ApplyLearnerLicenseServlet extends HttpServlet {
 		String typeOfLicenses = "";
 		//System.out.println("HEREEEEEEEEEE1");
 		LicenseHolderModel lm = new LicenseHolderModel();
+		lm.setAadhar(Long.parseLong((String) request.getSession().getAttribute("aadhar")));
 		//AadharInfoModel aam = (AadharInfoModel) request.getSession().getAttribute("aam");
 		/*System.out.println("HEREEEEEEEEEE2");
 		lm.setAadhar(Long.parseLong((String) request.getSession().getAttribute("aadhar")));
@@ -105,6 +106,10 @@ public class ApplyLearnerLicenseServlet extends HttpServlet {
                    String fieldName = item.getFieldName();
                    System.out.println(fieldName);
                    
+                   System.out.println("fieldname is : "+fieldName + "and file name is : "+fileName);
+                   
+                   request.getSession().setAttribute(fieldName, fileName);
+                   
                    File file = new File(UPLOAD_DIRECTORY + File.separator + fieldName+"-"+lm.getAadhar()+fileName);
                    System.out.println(UPLOAD_DIRECTORY + File.separator + fieldName+"-"+lm.getAadhar()+fileName);
                    item.write(file);
@@ -137,7 +142,7 @@ public class ApplyLearnerLicenseServlet extends HttpServlet {
 		String[] licenses = typeOfLicenses.split(",");
 		
 		request.getSession().setAttribute("typeOfLicenses", licenses);
-		request.getSession().setAttribute("totalAmount", licenses.length*150);
+		request.getSession().setAttribute("totalAmount", licenses.length*150+50); //includes online test fee
 		
 		try {
 			response.sendRedirect(request.getContextPath() + "/views/payment.jsp");

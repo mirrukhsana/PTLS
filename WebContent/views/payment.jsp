@@ -6,6 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link href="../css/loader.css" rel="stylesheet" type="text/css">
 <title>PTLS Payment</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style type="text/css">
@@ -108,7 +109,7 @@ span.price {
   <div class="col-75">
     <div class="container">
     <%AadharInfoModel aam = (AadharInfoModel) request.getSession().getAttribute("aam"); %>
-      <form action="<%=getServletContext().getContextPath()%>/handlepayment" method="post" onsubmit="return validateBilling();">
+      <form id="billingForm" action="<%=getServletContext().getContextPath()%>/handlepayment" method="post" onsubmit="return validateBilling();">
 
         <div class="row">
           <div class="col-50">
@@ -147,22 +148,22 @@ span.price {
             <label  for="cname">Name on Card</label>
             <input required type="text" id="cname" name="cardname" placeholder="Farzana Minaam Rukhsana">
             <label  for="ccnum">Credit card number</label>
-            <input required type="text" id="ccnum" name="cardnumber" placeholder="1111-2222-3333-4444">
+            <input required type="text" id="ccnum" name="cardnumber" placeholder="1111222233334444">
             <label for="expmonth">Exp Month</label>
             <select  required id="expmonth" name="expmonth" >
             	<option value = ""></option>
-            	<option value = "January">January</option>
-            	<option value = "February">February</option>
-            	<option value = "March">March</option>
-            	<option value = "April">April</option>
-            	<option value = "May">May</option>
-            	<option value = "June">June</option>
-            	<option value = "July">July</option>
-            	<option value = "August">August</option>
-            	<option value = "September">September</option>
-            	<option value = "October">October</option>
-            	<option value = "November">November</option>
-            	<option value = "December">December</option>
+            	<option value = "1">January</option>
+            	<option value = "2">February</option>
+            	<option value = "3">March</option>
+            	<option value = "4">April</option>
+            	<option value = "5">May</option>
+            	<option value = "6">June</option>
+            	<option value = "7">July</option>
+            	<option value = "8">August</option>
+            	<option value = "9">September</option>
+            	<option value = "10">October</option>
+            	<option value = "11">November</option>
+            	<option value = "12">December</option>
             </select>
 
 			
@@ -195,29 +196,47 @@ span.price {
         </span>
       </h4>
     <c:forEach items="${typeOfLicenses}" var="lic">
-      <p><a href="#"></a>${lic} <span class="price">150</span></p>
+      <p>${lic} <span class="price">150</span></p>
 	</c:forEach>
+		<p>Online Test Fee <span class="price">50</span></p>
       <hr>
       <p>Total <span class="price" style="color:black"><b>${totalAmount}</b></span></p>
     </div>
   </div>
 </div>
+
+<div id="loaderDiv" class="">Loading&#8230;</div>
 </body>
 
 
 <script type="text/javascript">
+
+	function submitForm() {
+	    let form = document.getElementById("billingForm");
+	    form.submit();
+	}
+	
+	function stateChange() {
+	    setTimeout(function () {
+	        	document.getElementById("loaderDiv").className = "";
+	    		submitForm();
+	    }, 3000);
+	}
+
 	function validateBilling(){
 		var cardnum = document.getElementById("ccnum").value;
 		var Expyear = document.getElementById("expyear").value;
 		var Cvv = document.getElementById("cvv").value;
+		var expMonth = document.getElementById("expmonth").value;
+		var loaderDiv = document.getElementById("loaderDiv");
 		
 		if (isNaN(cardnum) || cardnum.length != 16){
 			alert("Invalid Card Number!");
 			return false;
 		}
 		
-		if (isNaN(Expyear) || Expyear.length != 4 || Expyear < 2023 ){
-			alert("Invalid year!");
+		if (isNaN(Expyear) || Expyear.length != 4 || Expyear < 2022 ){
+			alert("Invalid Year!");
 			return false;
 		}
 		
@@ -226,6 +245,19 @@ span.price {
 			return false;
 		}
 		
+		const d = new Date();
+		var month = d.getMonth();
+		
+		if(Expyear == 2022){
+			if (expMonth < month){
+				alert("Invalid Month!");
+				return false;
+			}
+		}
+		
+		loaderDiv.className = "loading";
+		stateChange();
+		return false;
 	}
 </script>
 <script

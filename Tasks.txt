@@ -1,6 +1,6 @@
 important : 
 $ 1. Apply learners license page : Validate apply learner license data + files present, atleast one license should be selected 
-2. Validate checkout data, try payment gateway otherwise show loading + success. 
+2. Validate checkout data, show loading + success. 
 	2.a : After success, create LLapplication (db)
 	2.b : hide apply LL if LL application submitted or status = ?
 
@@ -10,6 +10,7 @@ $ 1. Apply learners license page : Validate apply learner license data + files p
 Later:
 --> RTO
 --> Data getting from aadhardb should be saved separately in ptls tables
+--> try payment gateway
 
 
 Later Later:

@@ -131,9 +131,8 @@ public class ApplyLearnerLicenseServlet extends HttpServlet {
 				//System.out.println("HEREEEEEEEEEE13");
 				e.printStackTrace();
 			}
-			//System.out.println("HEREEEEEEEEEE10");
+			
 		}
-		//System.out.println("_____________0000000000"+request.getSession().getAttribute("aadhar"));
 		
 		String[] licenses = typeOfLicenses.split(",");
 		

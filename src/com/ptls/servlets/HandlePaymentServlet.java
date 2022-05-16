@@ -1,6 +1,7 @@
 package com.ptls.servlets;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.ptls.constants.Constants;
+import com.ptls.daos.LLApplicationDao;
 import com.ptls.models.BillingDataModel;
 import com.ptls.models.LearnersLicenseApplication;
 
@@ -92,10 +94,26 @@ public class HandlePaymentServlet extends HttpServlet {
 	private String generateAppNum() {
 		
 		//Get last license number
+		int appnum;
+		
+		try{
+		    LLApplicationDao lld = new LLApplicationDao();
+		    appnum = lld.extractAppnumber();
+		
+		    String appnumstring = String.format("%012d", appnum);
+		    
+		}catch (SQLException e) {
+			System.out.println("DB Problem");
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		
 		//Based on last license number, generate new license number
 		
-		return null;
+		return appnumstring;
 	}
 
 }

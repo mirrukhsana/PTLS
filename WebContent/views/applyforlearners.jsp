@@ -93,7 +93,7 @@ body {
 				</div>
 				<!--  -->
 				<div class="col-md-5 border-right">
-				<form action="<%=getServletContext().getContextPath()%>/applyLL" method="post" enctype="multipart/form-data">
+				<form action="<%=getServletContext().getContextPath()%>/applyLL" method="post" enctype="multipart/form-data" onsubmit="return validateApplyForm();">
 					<div class="p-3 py-5">
 						<div
 							class="d-flex justify-content-between align-items-center mb-3">
@@ -160,24 +160,33 @@ body {
 						</div>
 						<div class="row mt-3">
 							<div class="col-md-6">
-								<label class="labels">Place of Birth</label><input
+								<label class="labels">Place of Birth</label><input required
 									id="placeOfBirthId" type="text" class="form-control"
 									placeholder="Place of Birth" value="" name="placeOfBirth">
 							</div>
 							<div class="col-md-6">
-								<label class="labels">Blood Group</label><input
-									id="bloodGroupId" type="text" class="form-control" value=""
-									placeholder="Blood Group" name="bloodGroup">
+								<label class="labels">Blood Group</label>
+								<select id="bloodGroupId" required class="form-control" name="bloodGroup">
+									<option value="">Select Blood Group</option>
+									<option value="A+">A+VE</option>
+									<option value="A-">A-VE</option>
+									<option value="B+">B+VE</option>
+									<option value="B-">B-VE</option>
+									<option value="O+">O+VE</option>
+									<option value="O-">O-VE</option>
+									<option value="AB+">AB+VE</option>
+									<option value="AB-">AB-VE</option>
+								</select>
 							</div>
 						</div>
 						<div class="row mt-3">
 							<div class="col-md-6">
-								<label class="labels">Emergency Mobile Number</label><input
+								<label class="labels">Emergency Mobile Number</label><input required
 									id="emergencyMobileNumberId" type="text" class="form-control"
 									placeholder="Mob. No." value="" name="emergencyMobNo">
 							</div>
 							<div class="col-md-6">
-								<label class="labels">Identification Mark</label><input
+								<label class="labels">Identification Mark</label><input required
 									id="identificationMarkId" type="text" class="form-control"
 									value="" placeholder="Identification Mark" name="identificationMark">
 							</div>
@@ -192,18 +201,18 @@ body {
 						<div class="row mt-3">
 							<div class="col-md-4">
 								<label class="labels">Address Proof Document</label>
-								<input
-									id="addressProofId" type="file" name="addressProof" class="form-control">
+								<input required
+									id="addressProofId" type="file" name="addressProof" class="form-control" accept="image/jpeg, application/pdf">
 							</div>
 							<div class="col-md-4">
 								<label class="labels">Date of Birth Document</label>
-								<input
-									id="dobDocId" type="file" name="dobDoc" class="form-control">
+								<input required
+									id="dobDocId" type="file" name="dobDoc" class="form-control" accept="image/jpeg,application/pdf">
 							</div>
 							<div class="col-md-4">
 								<label class="labels">Signature (png/jpg)</label>
-								<input
-									id="signatureId" type="file" class="form-control" name="signature">
+								<input required
+									id="signatureId" type="file" class="form-control" name="signature" accept="image/jpeg,application/pdf">
 							</div>
 						</div>
 						
@@ -215,7 +224,7 @@ body {
 						
 						<div class="row mt-3">
 							<label class="labels">Select the licenses you want to apply for</label>
-								<select
+								<select required
 									id="typeOfLicId" class="form-control" name="typeOfLic" multiple> 
 									<option value="MC 50cc">MC 50cc</option>
 									<option value="LMV-NT">LMV-NT</option>
@@ -268,7 +277,16 @@ body {
 	
 </body>
 <script type="text/javascript">
-	
+	function validateApplyForm(){
+		var emergencyMobileNumber = document.getElementById("emergencyMobileNumberId").value;
+		
+		if (isNaN(emergencyMobileNumber) || emergencyMobileNumber.length != 10){
+			alert("Mobile Number Invalid!");
+			return false;
+		}
+		
+		
+	}
 </script>
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>

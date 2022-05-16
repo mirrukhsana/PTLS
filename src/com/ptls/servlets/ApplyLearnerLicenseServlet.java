@@ -46,7 +46,8 @@ public class ApplyLearnerLicenseServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
-		String UPLOAD_DIRECTORY = "C:\\Users\\mir\\Documents\\WS\\PTLS\\WebContent\\docs";
+		//String UPLOAD_DIRECTORY = "C:\\Users\\mir\\Documents\\WS\\PTLS\\WebContent\\docs";
+		String UPLOAD_DIRECTORY = "C:\\Users\\Tahir Hussain\\Documents\\samwisews\\PTLS\\WebContent\\docs";
 		boolean isFilesSaved = false; 
 		String typeOfLicenses = "";
 		//System.out.println("HEREEEEEEEEEE1");

@@ -43,7 +43,7 @@ public class DatabaseManager {
 		
 		try {
 			Class.forName("com.mysql.jdbc.Driver");  
-			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/aadharmock","root","");
+			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/aadhardb","root","");
 			
 			if(con != null){
 				System.out.println("DB Connection successful!");

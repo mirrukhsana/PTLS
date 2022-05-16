@@ -57,6 +57,7 @@ select{
   margin-bottom: 20px;
   padding: 12px;
   border: 1px solid #ccc;
+   border-radius: 3px;
 }
 
 label {
@@ -107,7 +108,7 @@ span.price {
   <div class="col-75">
     <div class="container">
     <%AadharInfoModel aam = (AadharInfoModel) request.getSession().getAttribute("aam"); %>
-      <form action="handlepayment" method="post">
+      <form action="<%=getServletContext().getContextPath()%>/handlepayment" method="post" onsubmit="return validateBilling();">
 
         <div class="row">
           <div class="col-50">
@@ -142,12 +143,14 @@ span.price {
               <i class="fa fa-cc-mastercard" style="color:red;"></i>
               <i class="fa fa-cc-discover" style="color:orange;"></i>
             </div>
+            
             <label  for="cname">Name on Card</label>
             <input required type="text" id="cname" name="cardname" placeholder="Farzana Minaam Rukhsana">
             <label  for="ccnum">Credit card number</label>
             <input required type="text" id="ccnum" name="cardnumber" placeholder="1111-2222-3333-4444">
             <label for="expmonth">Exp Month</label>
-            <select style="display: inline-block;" required id="expmonth" name="expmonth" >
+            <select  required id="expmonth" name="expmonth" >
+            	<option value = ""></option>
             	<option value = "January">January</option>
             	<option value = "February">February</option>
             	<option value = "March">March</option>
@@ -162,6 +165,7 @@ span.price {
             	<option value = "December">December</option>
             </select>
 
+			
             <div class="row">
               <div class="col-50">
                 <label for="expyear">Exp Year</label>
@@ -199,4 +203,34 @@ span.price {
   </div>
 </div>
 </body>
+
+
+<script type="text/javascript">
+	function validateBilling(){
+		var cardnum = document.getElementById("ccnum").value;
+		var Expyear = document.getElementById("expyear").value;
+		var Cvv = document.getElementById("cvv").value;
+		
+		if (isNaN(cardnum) || cardnum.length != 16){
+			alert("Invalid Card Number!");
+			return false;
+		}
+		
+		if (isNaN(Expyear) || Expyear.length != 4 || Expyear < 2023 ){
+			alert("Invalid year!");
+			return false;
+		}
+		
+		if (isNaN(Cvv) || Cvv.length !=3) {
+			alert("Invalid Cvv!");
+			return false;
+		}
+		
+	}
+</script>
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
 </html>

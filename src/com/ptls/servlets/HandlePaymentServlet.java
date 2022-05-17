@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.ptls.constants.Constants;
+import com.ptls.daos.BillingDao;
 import com.ptls.daos.LLApplicationDao;
 import com.ptls.models.BillingDataModel;
 import com.ptls.models.LearnersLicenseApplication;
@@ -57,11 +58,12 @@ public class HandlePaymentServlet extends HttpServlet {
 		
 		for (String licenseType : licenses){
 			LearnersLicenseApplication lla = new LearnersLicenseApplication();
+			lla.setAadhar((String)request.getSession().getAttribute("aadhar"));
 			lla.setAddressFileName((String) session.getAttribute("addressProof"));
 			lla.setApplicationStatus(Constants.PROCESSING);
 			
 			
-			//lla.setAppNum(app_num);
+			lla.setAppNum(app_num);
 			
 			lla.setCroStatus("0");
 			lla.setDobFileName((String) session.getAttribute("dobDoc"));
@@ -75,32 +77,59 @@ public class HandlePaymentServlet extends HttpServlet {
 		
 		BillingDataModel bdm = new BillingDataModel();
 		
-		//bdm.setApp_num(app_num);
+		bdm.setApp_num(app_num);
 		bdm.setCard_num("************"+request.getParameter("cardnumber").substring(12));
 		bdm.setName_on_card(request.getParameter("cardname"));
 		bdm.setTotal_amount((Integer)session.getAttribute("totalAmount"));
-		
 
-		
-		//create application in db
+		//Create Application
+		LLApplicationDao lld = new LLApplicationDao();
+		try {
+			lld.createApplication(ll_list);
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
 		
 		//save billing data
+		BillingDao bd = new BillingDao();
+		try {
+			bd.createBill(bdm);
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
 		
 		//Success Email
 		
 		//send Invoice page
+		response.sendRedirect(request.getContextPath() + "/views/invoice.jsp");
 	}
 
 	private String generateAppNum() {
 		
 		//Get last license number
-		int appnum;
+		String appnumstring = null;
 		
 		try{
+			String appnum = null;
 		    LLApplicationDao lld = new LLApplicationDao();
-		    appnum = lld.extractAppnumber();
+		    appnum = lld.extractLastAppnumber(); //ex A000000000001
 		
-		    String appnumstring = String.format("%012d", appnum);
+		    if(appnum != null){
+		    	String firstAppLetter = appnum.substring(0, 1); //ex A
+			    String restOfTheAppNum = appnum.substring(1);  //000000000001
+			    
+			    int restOfAppNumINT = Integer.parseInt(restOfTheAppNum);
+			    System.out.println("restOfAppNumINT : " + restOfAppNumINT);
+			    
+			    restOfAppNumINT++;
+			    
+			    appnumstring = String.format("%012d", restOfAppNumINT);
+			    
+			    appnumstring = firstAppLetter + appnumstring;
+		    }
+		    else{
+		    	appnumstring = "A000000000001";
+		    }
 		    
 		}catch (SQLException e) {
 			System.out.println("DB Problem");
@@ -112,7 +141,6 @@ public class HandlePaymentServlet extends HttpServlet {
 		
 		
 		//Based on last license number, generate new license number
-		
 		return appnumstring;
 	}
 

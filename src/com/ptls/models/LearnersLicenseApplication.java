@@ -1,7 +1,8 @@
 package com.ptls.models;
 
 public class LearnersLicenseApplication {
-	private int appNum;
+	private String aadhar;
+	private String appNum;
 	private String applicationStatus;
 	private String licenseType;
 	private String addressFileName;
@@ -10,10 +11,16 @@ public class LearnersLicenseApplication {
 	private String healthStatus;
 	private String croStatus;
 	private String notifiedStatus;
-	public int getAppNum() {
+	public String getAadhar() {
+		return aadhar;
+	}
+	public void setAadhar(String aadhar) {
+		this.aadhar = aadhar;
+	}
+	public String getAppNum() {
 		return appNum;
 	}
-	public void setAppNum(int appNum) {
+	public void setAppNum(String appNum) {
 		this.appNum = appNum;
 	}
 	public String getApplicationStatus() {
@@ -66,11 +73,12 @@ public class LearnersLicenseApplication {
 	}
 	@Override
 	public String toString() {
-		return "LearnersLicenseApplication [appNum=" + appNum + ", applicationStatus=" + applicationStatus
-				+ ", licenseType=" + licenseType + ", addressFileName=" + addressFileName + ", dobFileName="
-				+ dobFileName + ", signatureFileName=" + signatureFileName + ", healthStatus=" + healthStatus
-				+ ", croStatus=" + croStatus + ", notifiedStatus=" + notifiedStatus + "]";
+		return "LearnersLicenseApplication [aadhar=" + aadhar + ", appNum=" + appNum + ", applicationStatus="
+				+ applicationStatus + ", licenseType=" + licenseType + ", addressFileName=" + addressFileName
+				+ ", dobFileName=" + dobFileName + ", signatureFileName=" + signatureFileName + ", healthStatus="
+				+ healthStatus + ", croStatus=" + croStatus + ", notifiedStatus=" + notifiedStatus + "]";
 	}
+	
 	
 	
 }

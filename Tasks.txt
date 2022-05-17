@@ -1,11 +1,18 @@
 important : 
 $ 1. Apply learners license page : Validate apply learner license data + files present, atleast one license should be selected 
 2. Validate checkout data, show loading + success. 
-	2.a : After success, create LLapplication (db)
+	2.a : After success, create LLapplication (db) , save billing data, show invoice page + generate + success email
+		2.a.a : 1. LLApplication : aadhar, application number, applicationSubmissionDate, applicationStatus, licenseType, addressFile,
+		DOBFile, signatureFile, health_check, cro_check, notified;
+		2.a.b : BillingData : application_number, name_on_card, card_num (masked), amount 
 	2.b : hide apply LL if LL application submitted or status = ?
 
 
 
+
+Later But High Priority:
+1. Send email for checking aadhar and email
+2. Send email after llapplication successful
 
 Later:
 --> RTO
@@ -16,3 +23,36 @@ Later:
 Later Later:
 
 --> ApplyLearnersLicense, signup -> Backend validation
+
+
+
+
+
+
+
+
+SQL
+
+CREATE TABLE `billingdata` (
+  `application_number` varchar(256) NOT NULL,
+  `name_on_card` varchar(256) NOT NULL,
+  `card_num` varchar(16) NOT NULL,
+  `total_amount` int(11) NOT NULL
+)
+
+
+CREATE TABLE `llapplication` (
+  `aadhar` varchar(256) NOT NULL,
+  `application_number` varchar(256) NOT NULL,
+  `application_status` varchar(256) NOT NULL,
+  `licensetype` varchar(256) NOT NULL,
+  `application_submission_date` date NOT NULL,
+  `dob_file` varchar(256) NOT NULL,
+  `address_file` varchar(256) NOT NULL,
+  `signature_file` varchar(256) NOT NULL,
+  `health_check` varchar(1) NOT NULL,
+  `cro_check` varchar(1) NOT NULL,
+  `notified` varchar(1) NOT NULL
+) 
+
+

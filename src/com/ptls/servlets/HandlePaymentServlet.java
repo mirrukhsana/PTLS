@@ -13,11 +13,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.ptls.constants.Constants;
+import com.ptls.daos.AadharAccessDao;
 import com.ptls.daos.BillingDao;
 import com.ptls.daos.LLApplicationDao;
 import com.ptls.models.AadharInfoModel;
 import com.ptls.models.BillingDataModel;
 import com.ptls.models.LearnersLicenseApplication;
+import com.ptls.utilities.Mailer;
 
 /**
  * Servlet implementation class HandlePaymentServlet
@@ -103,8 +105,8 @@ public class HandlePaymentServlet extends HttpServlet {
 		request.getSession().setAttribute("bdm", bdm);
 		
 		//Success Email
-		
-		System.out.println("Testing aam : "+((AadharInfoModel)request.getSession().getAttribute("aam")).getFull_name());
+		System.out.println("sending email to : "+((AadharInfoModel)(request.getSession().getAttribute("aam"))).getEmailAddress());
+		Mailer.send(((AadharInfoModel)(request.getSession().getAttribute("aam"))).getEmailAddress(), "Application Suucessful", "Application has been created with application number : "+bdm.getApp_num());
 		
 		//send Invoice page
 		response.sendRedirect(request.getContextPath() + "/views/invoice.jsp");

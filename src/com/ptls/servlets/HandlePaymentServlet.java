@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import com.ptls.constants.Constants;
 import com.ptls.daos.BillingDao;
 import com.ptls.daos.LLApplicationDao;
+import com.ptls.models.AadharInfoModel;
 import com.ptls.models.BillingDataModel;
 import com.ptls.models.LearnersLicenseApplication;
 
@@ -90,6 +91,8 @@ public class HandlePaymentServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		
+		request.getSession().setAttribute("ll_list", ll_list);
+		
 		//save billing data
 		BillingDao bd = new BillingDao();
 		try {
@@ -97,8 +100,11 @@ public class HandlePaymentServlet extends HttpServlet {
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
+		request.getSession().setAttribute("bdm", bdm);
 		
 		//Success Email
+		
+		System.out.println("Testing aam : "+((AadharInfoModel)request.getSession().getAttribute("aam")).getFull_name());
 		
 		//send Invoice page
 		response.sendRedirect(request.getContextPath() + "/views/invoice.jsp");

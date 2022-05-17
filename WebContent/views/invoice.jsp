@@ -1,7 +1,9 @@
+<%@page import="java.util.Date"%>
 <%@page import="com.ptls.models.AadharInfoModel"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -293,7 +295,7 @@ ul {
        </thead>
        <tbody style="background:#ffff;padding:20px;">
          <tr>
-           <td colspan="4" style="padding:20px 0px 0px 20px;text-align:left;font-size: 16px; font-weight: bold;color:#000;">Hello, ${aam.aadhar}</td>
+           <td colspan="4" style="padding:20px 0px 0px 20px;text-align:left;font-size: 16px; font-weight: bold;color:#000;">Hello, ${aam.full_name}</td>
          </tr>
          <tr>
            <td colspan="4" style="text-align:left;padding:10px 10px 10px 20px;font-size:14px;">Your order details</td>
@@ -303,61 +305,67 @@ ul {
      <table style="width:100%; height:auto; background-color:#fff;text-align:center; padding:10px; background:#fafafa">
        <tbody>
          <tr style="color:#6c757d; font-size: 20px;">
-           <td style="border-right:1.5px dashed  #DCDCDC; width:25%;font-size:12px;font-weight:700;padding: 0px 0px 10px 0px;">Order Date</td>
-           <td style="border-right: 1.5px dashed  #DCDCDC ;width:25%;font-size:12px;font-weight:700;padding: 0px 0px 10px 0px;">Order No.</td>
+           <td style="border-right:1.5px dashed  #DCDCDC; width:25%;font-size:12px;font-weight:700;padding: 0px 0px 10px 0px;">License Submission Date</td>
+           <td style="border-right: 1.5px dashed  #DCDCDC ;width:25%;font-size:12px;font-weight:700;padding: 0px 0px 10px 0px;">Application Number</td>
            <td style="border-right:1.5px dashed  #DCDCDC ;width:25%;font-size:12px;font-weight:700;padding: 0px 0px 10px 0px;">Payment</td>
-           <td style="width:25%;font-size:12px;font-weight:700;padding: 0px 0px 10px 0px;">Shipping Address</td>
+           <td style="width:25%;font-size:12px;font-weight:700;padding: 0px 0px 10px 0px;">Billing Address</td>
          </tr>
          <tr style="background-color:#fff; font-size:12px; color:#262626;">
-           <td style="border-right:1.5px dashed  #DCDCDC ;width:25%; font-weight:bold;background: #fafafa;">11.07.2021</td>
-           <td style="border-right:1.5px dashed  #DCDCDC ;width:25% ; font-weight:bold;background: #fafafa;">000000001</td>
-           <td style="border-right:1.5px dashed  #DCDCDC ;width:25%; font-weight:bold;background: #fafafa;">CASH</td>
-           <td style="width:25%; font-weight:bold;background: #fafafa;">Kosovo, Prishtina</td>
+           <td style="border-right:1.5px dashed  #DCDCDC ;width:25%; font-weight:bold;background: #fafafa;"><fmt:formatDate type = "date" value = "<%=(new Date())%>" /></td>
+           <td style="border-right:1.5px dashed  #DCDCDC ;width:25% ; font-weight:bold;background: #fafafa;">${bdm.app_num}</td>
+           <td style="border-right:1.5px dashed  #DCDCDC ;width:25%; font-weight:bold;background: #fafafa;">Debit/Credit Card</td>
+           <td style="width:25%; font-weight:bold;background: #fafafa;">${aam.address}</td>
          </tr>
        </tbody>
      </table>
      <table style="width:100%; height:auto; background-color:#fff; margin-top:0px;  padding:20px; font-size:12px; border: 1px solid #ebebeb; border-top:0px;">
        <thead>
          <tr style=" color: #6c757d;font-weight: bold; padding: 5px;">
-           <td colspan="2" style="text-align: left;">PRODUCT INFORMATION</td>
-           <td style="text-align: center;">SIZE</td>
+           <td colspan="2" style="text-align: left;">LICENSE TYPE</td>
            <td style="padding: 10px;text-align:center;">QUANTITY</td>
-           <td style="text-align: right;padding: 10px;">PRICE</td>
+           <td style="text-align: right;padding: 10px;">Fee</td>
          </tr>
        </thead>
        <tbody>
-         <tr>
-           <td style="width:10%; ">
-             <a href=""><img src="" style="width:100px;" /></a>
-           </td>
-           <td style="width:20%;margin-left:10px;text-align: center;">title</td>
-           <td style="width:20%;padding: 10px; text-align:center;"> S</td>
-           <td style="width:20%;padding: 10px;text-align: center;">2</td>
-           <td style="width:30%; ;font-weight: bold;font-size: 14px;">
-             <table style="width:100%;">
-               <tr><td style="text-align:end;font-size:13px;">20 &euro;</td></tr>
-             </table>
-           </td>
-         </tr>
+       <c:forEach items="${ll_list}" var="lic">
+	         <tr>
+	           <td style="width:20%;margin-left:10px;text-align: center;">${lic.licenseType}</td>
+	           <td style="width:20%;padding: 10px;text-align: center;">1</td>
+	           <td style="width:30%; ;font-weight: bold;font-size: 14px;">
+	             <table style="width:100%;">
+	               <tr><td style="text-align:end;font-size:13px;">150 Rs.</td></tr>
+	             </table>
+	           </td>
+	         </tr>
+         </c:forEach>
+	         <tr>
+		           <td style="width:20%;margin-left:10px;text-align: center;">Online Test</td>
+		           <td style="width:20%;padding: 10px;text-align: center;">1</td>
+		           <td style="width:30%; ;font-weight: bold;font-size: 14px;">
+		             <table style="width:100%;">
+		               <tr><td style="text-align:end;font-size:13px;">50 Rs.</td></tr>
+		             </table>
+		           </td>
+		         </tr>
        </tbody>
      </table>
      <table style="width:100%; height:auto; background-color:#fff;padding:20px; font-size:12px; border: 1px solid #ebebeb; border-top:0">
        <tbody>
          <tr style="padding:20px;color:#000;font-size:15px">
            <td style="font-weight: bold;padding:5px 0px">Total</td>
-           <td style="text-align:right;padding:5px 0px;font-weight: bold;font-size:16px;">20 &euro;</td>
+           <td style="text-align:right;padding:5px 0px;font-weight: bold;font-size:16px;">${bdm.total_amount}</td>
          </tr>
 
          <tr>
-           <td colspan="2" style="font-weight:bold;"><span style="color:#c61932;font-weight: bold;">THANK YOU</span> for shipping with us!</td>
+           <td colspan="2" style="font-weight:bold;"><span style="color:#c61932;font-weight: bold;">THANK YOU</span> for applying!</td>
          </tr>
          <tr>
-           <td colspan="2" style="font-weight:bold;text-align:left;padding:5px 0px 0px 00px;font-size:14px;">THRED<span>+</span> team</td>
+           <td colspan="2" style="font-weight:bold;text-align:left;padding:5px 0px 0px 00px;font-size:14px;">PTLS Team</td>
          </tr>
        </tbody>
        <tfoot style="padding-top:20px;font-weight: bold;">
          <tr>
-           <td style="padding-top:20px;">Need help? Contact us <span style="color:#c61932"> info@thred-plus.shop </span></td>
+           <td style="padding-top:20px;">Need help? Contact us <span style="color:#c61932"> info@jkptls.com </span></td>
          </tr>
        </tfoot>
      </table>

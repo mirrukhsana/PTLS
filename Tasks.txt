@@ -1,18 +1,25 @@
 important : 
-$ 1. Apply learners license page : Validate apply learner license data + files present, atleast one license should be selected 
-$ 2. Validate checkout data, show loading + success. 
+$	1. Apply learners license page : Validate apply learner license data + files present, atleast one license should be selected 
+$ 	2. Validate checkout data, show loading + success. 
 	2.a : After success, create LLapplication (db) , save billing data, show invoice page + generate + success email
 		2.a.a : 1. LLApplication : aadhar, application number, applicationSubmissionDate, applicationStatus, licenseType, addressFile,
 		DOBFile, signatureFile, health_check, cro_check, notified;
 		2.a.b : BillingData : application_number, name_on_card, card_num (masked), amount 
 	2.b : hide apply LL if LL application submitted or status = ?
+3. Show ll application status to user in his/her profile
+4. health batch job + db for health check
+5. CRO batch job + db for CRO check
+6. Notify Batch job : runs after approved or rejected and then sets notified colum to Y
+7. Online Examination.
+8. Generate learners license if online exam passed
+
 
 
 
 
 Later But High Priority:
 1. Send email for checking aadhar and email
-2. Send email after llapplication successful
+	1.a Change signup process
 
 Later:
 --> RTO

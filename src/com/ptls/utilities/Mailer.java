@@ -7,7 +7,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 public class Mailer {
-	public static void send(String to, String subject, String msg) {
+	public static void send(String to, String subject, String m) {
 
 		final String user = "";// change accordingly
 		final String pass = "";
@@ -30,7 +30,9 @@ public class Mailer {
 			message.setFrom(new InternetAddress(user));
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
 			message.setSubject(subject);
-			message.setText(msg);
+			//message.setText((String)object);
+			message.setText(m);
+			
 
 			// 3rd step)send message
 			Transport.send(message);

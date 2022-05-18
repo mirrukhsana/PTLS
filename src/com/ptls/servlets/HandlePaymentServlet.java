@@ -1,6 +1,7 @@
 package com.ptls.servlets;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -104,9 +105,19 @@ public class HandlePaymentServlet extends HttpServlet {
 		}
 		request.getSession().setAttribute("bdm", bdm);
 		
+		
+		PrintWriter Writer = response.getWriter();
+		String imagepath = "/imgs/PTLSlogo.png";
+		//build html message
+		String htmlmessage = "<html>";
+		htmlmessage += "<img src="+imagepath+" height=50% width=50% >";
+		htmlmessage +="<br/><br/>"+((AadharInfoModel)(request.getSession().getAttribute("aam"))).getFull_name()+ "!<h4>Your Learners Application has been created." + "<br/><br/>";
+		htmlmessage += "Your Application number : "  + bdm.getApp_num() + "</h4>";
+		htmlmessage += "</html>";
+		
 		//Success Email
 		System.out.println("sending email to : "+((AadharInfoModel)(request.getSession().getAttribute("aam"))).getEmailAddress());
-		Mailer.send(((AadharInfoModel)(request.getSession().getAttribute("aam"))).getEmailAddress(), "Application Suucessful", "Application has been created with application number : "+bdm.getApp_num());
+		Mailer.send(((AadharInfoModel)(request.getSession().getAttribute("aam"))).getEmailAddress(), "Application Suucessful", htmlmessage);
 		
 		//send Invoice page
 		response.sendRedirect(request.getContextPath() + "/views/invoice.jsp");

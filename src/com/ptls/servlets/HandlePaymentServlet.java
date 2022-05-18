@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -105,15 +106,17 @@ public class HandlePaymentServlet extends HttpServlet {
 		}
 		request.getSession().setAttribute("bdm", bdm);
 		
-		
-		PrintWriter Writer = response.getWriter();
-		String imagepath = "/imgs/PTLSlogo.png";
 		//build html message
-		String htmlmessage = "<html>";
-		htmlmessage += "<img src="+imagepath+" height=50% width=50% >";
-		htmlmessage +="<br/><br/>"+((AadharInfoModel)(request.getSession().getAttribute("aam"))).getFull_name()+ "!<h4>Your Learners Application has been created." + "<br/><br/>";
-		htmlmessage += "Your Application number : "  + bdm.getApp_num() + "</h4>";
-		htmlmessage += "</html>";
+		String htmlmessage = "<p>Hello " + ((AadharInfoModel)(request.getSession().getAttribute("aam"))).getFull_name()+",</p>";
+		htmlmessage += "We are pleased to inform you that your Learners License Application with Application Number " +bdm.getApp_num() +" has been created successfully.";
+
+		htmlmessage += "<h4>Please find the invoice details below<h4>";
+
+		htmlmessage +="<table> <tr> <th style='padding:5%;'>License Submission Date</th> <th style='padding:5%;'>Application Number</th> <th style='padding:5%;'>Payment</th> <th style='padding:5%;'>Billing Address</th></tr><tr><td style='padding:5%;'>"+(new Date()).getDate()+"-"+(new Date()).getMonth()+1+"-"+(new Date()).getYear()+1900+"</td><td style='padding:5%;'>"+bdm.getApp_num()+"</td><td style='padding:5%;'>Debit/Credit Card</td><td style='padding:5%;'>"+((AadharInfoModel)(request.getSession().getAttribute("aam"))).getAddress()+"</td></tr></table>";
+		
+		htmlmessage +="<h5>Thank you for applying!</h5>";
+		htmlmessage +="<h4>JK PTLS Team<h4>";
+		htmlmessage +="<h6>Need help? Contact us jkptlsteam@gmail.com<h6>";
 		
 		//Success Email
 		System.out.println("sending email to : "+((AadharInfoModel)(request.getSession().getAttribute("aam"))).getEmailAddress());

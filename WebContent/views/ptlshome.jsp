@@ -1,3 +1,4 @@
+<%@page import="com.ptls.daos.LLApplicationDao"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
@@ -244,6 +245,9 @@ ul {
  <div class="menu-btn">
     <i class="fas fa-bars fa-2x"></i>
   </div>
+  
+<%boolean isLLApplyVisible = (new LLApplicationDao()).applyLL_isVisible(((String)request.getSession().getAttribute("aadhar")));
+%>
 <c:if test="${aadhar == null}">
 	<% response.sendRedirect(request.getContextPath()+"/");%>
 </c:if>
@@ -278,12 +282,14 @@ ul {
 
     <!-- Home cards 1 -->
     <section class="home-cards">
+    <%if(isLLApplyVisible) {%>
       <a href="<%= request.getContextPath()%>/views/applyforlearners.jsp">
       	<div style="border-style: outset;">
       		<img src="http://localhost:8080/PTLS/imgs/learnerslicensebkg.png" alt="" />
         	<h4>Apply for Learner's License</h4>
       	</div>
       </a>
+     <%}%>
       <div style="border-style: outset;">
       <img src="http://localhost:8080/PTLS/imgs/driverslicensebkg.png" alt="" />
         <h3>Apply for Driving License</h3>

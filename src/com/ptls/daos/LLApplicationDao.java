@@ -41,6 +41,43 @@ public class LLApplicationDao {
 		DatabaseManager.getInstance().closeConnection(con);
 		
 	}
+	
+	public boolean applyLL_isVisible(String aadhar) throws ClassNotFoundException, SQLException{
+		
+		Connection con = DatabaseManager.getInstance().getDBConnection();
+		
+		PreparedStatement stmt=con.prepareStatement("select * from llapplication where application_number = (select max(application_number) from llapplication where aadhar = ?)");  
+		stmt.setString(1, aadhar);
+		ResultSet rs=stmt.executeQuery();  
+		
+		boolean doesLL_APPL_exist = false;
+		boolean isLatestLLApplicationRejected = false;
+		
+		if(rs.next()){ 
+			if(rs.getString(9).equals("N") || rs.getString(10).equals("N")){
+				isLatestLLApplicationRejected = true;
+			}
+			doesLL_APPL_exist = true;
+		}
+		else{
+			doesLL_APPL_exist = false;
+		}
+		
+		boolean isApplyLLVisible = false;
+		
+		if (!doesLL_APPL_exist){
+			isApplyLLVisible = true;
+			DatabaseManager.getInstance().closeConnection(con);
+			return isApplyLLVisible;
+		}
+		
+		if(isLatestLLApplicationRejected){
+			isApplyLLVisible = true;
+		}
+		
+		DatabaseManager.getInstance().closeConnection(con);
+		return isApplyLLVisible;
+	}
 
 	public String extractLastAppnumber() throws ClassNotFoundException, SQLException{
 		

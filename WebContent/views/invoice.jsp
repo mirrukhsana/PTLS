@@ -357,8 +357,8 @@ ul {
        </tbody>
        <tfoot style="padding-top:20px;font-weight: bold;">
          <tr>
-           <td style="padding-top:20px;">Need help? Contact us <span style="color:#c61932"> info@jkptls.com </span></td>
-         </tr>
+           <td style="padding-top:20px;">Need help? Contact us: <a href="mailto:jkptlsteam@gmail.com"><span style="color:#c61932"> jkptlsteam@gmail.com </span></a></td>
+         
        </tfoot>
      </table>
 </div>

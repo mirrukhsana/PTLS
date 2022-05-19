@@ -96,4 +96,23 @@ public class LLApplicationDao {
 		DatabaseManager.getInstance().closeConnection(con);
 		return appnum;
 	}
+	
+	public ResultSet extractDataFromllapplication(String appnum) throws ClassNotFoundException, SQLException{
+		
+		Connection con = DatabaseManager.getInstance().getDBConnection();
+		PreparedStatement stmt=con.prepareStatement("select * from llapplication where application_number = ?");  
+		
+		stmt.setString(1, appnum);
+		ResultSet rs=stmt.executeQuery();
+		
+		if(rs.next()){
+			//DatabaseManager.getInstance().closeConnection(con);
+		return rs;
+		}
+		
+		else{
+			//DatabaseManager.getInstance().closeConnection(con);
+			return null;
+	}
+	}
 }

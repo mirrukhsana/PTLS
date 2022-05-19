@@ -2,6 +2,7 @@ package com.ptls.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -106,13 +107,16 @@ public class HandlePaymentServlet extends HttpServlet {
 		}
 		request.getSession().setAttribute("bdm", bdm);
 		
+		
+		
+		
 		//build html message
 		String htmlmessage = "<p>Hello " + ((AadharInfoModel)(request.getSession().getAttribute("aam"))).getFull_name()+",</p>";
 		htmlmessage += "We are pleased to inform you that your Learners License Application with Application Number " +bdm.getApp_num() +" has been created successfully.";
 
 		htmlmessage += "<h4>Please find the invoice details below<h4>";
 
-		htmlmessage +="<table> <tr> <th style='padding:5%;'>License Submission Date</th> <th style='padding:5%;'>Application Number</th> <th style='padding:5%;'>Payment</th> <th style='padding:5%;'>Billing Address</th></tr><tr><td style='padding:5%;'>"+(new Date()).getDate()+"-"+(new Date()).getMonth()+1+"-"+(new Date()).getYear()+1900+"</td><td style='padding:5%;'>"+bdm.getApp_num()+"</td><td style='padding:5%;'>Debit/Credit Card</td><td style='padding:5%;'>"+((AadharInfoModel)(request.getSession().getAttribute("aam"))).getAddress()+"</td></tr></table>";
+		htmlmessage +="<table> <tr> <th style='padding:5%;'>License Submission Date</th> <th style='padding:5%;'>Application Number</th> <th style='padding:5%;'>Payment</th> <th style='padding:5%;'>Billing Address</th></tr><tr><td style='padding:5%;'>"+(new Date()).getDate()+"-"+(new Date()).getMonth()+1+"-"+(new Date()).getYear()+1900+"</td><td style='padding:5%;'>"+bdm.getApp_num()+"</td><td style='padding:5%;'>Debit/Credit Card</td><td style='padding:5%;'>"+((AadharInfoModel)(request.getSession().getAttribute("aam"))).getAddress()+"</td></tr> <tr><td style='padding:5%;'> LICENSE_TYPES </td> <td style='padding:5%;'> QUANTITY </td> <td style='padding:5%;'> FEE </td></tr></table>";
 		
 		htmlmessage +="<h5>Thank you for applying!</h5>";
 		htmlmessage +="<h4>JK PTLS Team<h4>";

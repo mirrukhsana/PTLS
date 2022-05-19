@@ -66,7 +66,7 @@ public class HandlePaymentServlet extends HttpServlet {
 			LearnersLicenseApplication lla = new LearnersLicenseApplication();
 			lla.setAadhar((String)request.getSession().getAttribute("aadhar"));
 			lla.setAddressFileName((String) session.getAttribute("addressProof"));
-			lla.setApplicationStatus(Constants.PROCESSING);
+			lla.setApplicationStatus(Constants.PROCESSING); 
 			
 			
 			lla.setAppNum(app_num);
@@ -117,11 +117,14 @@ public class HandlePaymentServlet extends HttpServlet {
 		
 		htmlmessage += "<hr />";
 		
+		htmlmessage +="<table style='width:100%'> <tr> <th style='padding:5%;'>License Type</th> <th style='padding:5%;'>Quantity</th> <th style='padding:5%;'>Amount</th></tr>";
+		
 		for (String licenseType : licenses){
-			htmlmessage +="<table style='width:100%'> <tr> <th style='padding:5%;'>License Type</th> <th style='padding:5%;'>Quantity</th> <th style='padding:5%;'>Amount</th></tr><tr><td style='padding:5%;'>"+licenseType+"-"+1+"</td><td style='padding:5%;'>"+150.00+"</td></tr></table>";
+			htmlmessage += "<tr><td style='padding:5%;'>"+licenseType+"</td><td style='padding:5%;'>"+1+"</td><td style='padding:5%;'>"+150.00+"</td></tr>";
 		}
 		
-		
+		htmlmessage += "<tr><td style='padding:5%;'>Online Test</td><td style='padding:5%;'>"+1+"</td><td style='padding:5%;'>"+50.00+"</td></tr></table>";
+		htmlmessage += "<p></p>";
 		htmlmessage +="<h5>Thank you for applying!</h5>";
 		htmlmessage +="<h4>JK PTLS Team<h4>";
 		htmlmessage +="<h6>Need help? Contact us jkptlsteam@gmail.com<h6>";

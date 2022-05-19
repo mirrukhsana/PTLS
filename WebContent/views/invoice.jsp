@@ -298,7 +298,7 @@ ul {
            <td colspan="4" style="padding:20px 0px 0px 20px;text-align:left;font-size: 16px; font-weight: bold;color:#000;">Hello, ${aam.full_name}</td>
          </tr>
          <tr>
-           <td colspan="4" style="text-align:left;padding:10px 10px 10px 20px;font-size:14px;">Your order details</td>
+           <td colspan="4" style="text-align:left;padding:10px 10px 10px 20px;font-size:14px;">Your Payment details,</td>
          </tr>
        </tbody>
      </table>
@@ -321,31 +321,23 @@ ul {
      <table style="width:100%; height:auto; background-color:#fff; margin-top:0px;  padding:20px; font-size:12px; border: 1px solid #ebebeb; border-top:0px;">
        <thead>
          <tr style=" color: #6c757d;font-weight: bold; padding: 5px;">
-           <td colspan="2" style="text-align: left;">LICENSE TYPE</td>
+           <td  style="text-align: center;">LICENSE TYPE</td>
            <td style="padding: 10px;text-align:center;">QUANTITY</td>
-           <td style="text-align: right;padding: 10px;">Fee</td>
+           <td style="padding: 10px; text-align:center;">FEE</td>
          </tr>
        </thead>
        <tbody>
        <c:forEach items="${ll_list}" var="lic">
 	         <tr>
-	           <td style="width:20%;margin-left:10px;text-align: center;">${lic.licenseType}</td>
+	           <td style="width:20%;padding:10px;text-align: center;">${lic.licenseType}</td>
 	           <td style="width:20%;padding: 10px;text-align: center;">1</td>
-	           <td style="width:30%; ;font-weight: bold;font-size: 14px;">
-	             <table style="width:100%;">
-	               <tr><td style="text-align:end;font-size:13px;">150 Rs.</td></tr>
-	             </table>
-	           </td>
+	            <td style="width:20%;padding: 10px;text-align:center;font-size:13px;">150 Rs.</td>
 	         </tr>
          </c:forEach>
 	         <tr>
 		           <td style="width:20%;margin-left:10px;text-align: center;">Online Test</td>
 		           <td style="width:20%;padding: 10px;text-align: center;">1</td>
-		           <td style="width:30%; ;font-weight: bold;font-size: 14px;">
-		             <table style="width:100%;">
-		               <tr><td style="text-align:end;font-size:13px;">50 Rs.</td></tr>
-		             </table>
-		           </td>
+		           <td style="idth:20%;padding: 10px;text-align:center;font-size:13px;">50 Rs.</td>
 		         </tr>
        </tbody>
      </table>

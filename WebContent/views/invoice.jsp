@@ -262,7 +262,7 @@ ul {
       <img src="http://localhost:8080/PTLS/imgs/OneLogin.png" alt="OneLogin" class="logo">
 
       <ul class="main-menu">
-        <li><a href="#">My Profile (<%= request.getSession().getAttribute("aadhar")%>)</a></li>
+        <li><a href="<%= request.getContextPath()%>/views/ptlshome.jsp">Home </a></li>
         <li><a href="<%=request.getContextPath()%>/login?param=logout">Logout</a></li>
       </ul>
 

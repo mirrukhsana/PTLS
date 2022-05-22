@@ -1,5 +1,7 @@
 package com.ptls.models;
 
+import java.util.Date;
+
 public class LearnersLicenseApplication {
 	private String aadhar;
 	private String appNum;
@@ -11,6 +13,9 @@ public class LearnersLicenseApplication {
 	private String healthStatus;
 	private String croStatus;
 	private String notifiedStatus;
+	
+	private Date licenseSubmissionDate;
+	
 	public String getAadhar() {
 		return aadhar;
 	}
@@ -71,14 +76,18 @@ public class LearnersLicenseApplication {
 	public void setNotifiedStatus(String notifiedStatus) {
 		this.notifiedStatus = notifiedStatus;
 	}
+	public Date getLicenseSubmissionDate() {
+		return licenseSubmissionDate;
+	}
+	public void setLicenseSubmissionDate(Date licenseSubmissionDate) {
+		this.licenseSubmissionDate = licenseSubmissionDate;
+	}
 	@Override
 	public String toString() {
 		return "LearnersLicenseApplication [aadhar=" + aadhar + ", appNum=" + appNum + ", applicationStatus="
 				+ applicationStatus + ", licenseType=" + licenseType + ", addressFileName=" + addressFileName
 				+ ", dobFileName=" + dobFileName + ", signatureFileName=" + signatureFileName + ", healthStatus="
-				+ healthStatus + ", croStatus=" + croStatus + ", notifiedStatus=" + notifiedStatus + "]";
+				+ healthStatus + ", croStatus=" + croStatus + ", notifiedStatus=" + notifiedStatus
+				+ ", licenseSubmissionDate=" + licenseSubmissionDate + "]";
 	}
-	
-	
-	
 }

@@ -4,9 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.ptls.models.AadharInfoModel;
 import com.ptls.models.LearnersLicenseApplication;
 import com.ptls.utilities.DatabaseManager;
 
@@ -99,20 +101,53 @@ public class LLApplicationDao {
 	
 	public ResultSet extractDataFromllapplication(String appnum) throws ClassNotFoundException, SQLException{
 		
+			Connection con = DatabaseManager.getInstance().getDBConnection();
+			PreparedStatement stmt=con.prepareStatement("select * from llapplication where application_number = ?");  
+			
+			stmt.setString(1, appnum);
+			ResultSet rs=stmt.executeQuery();
+			
+			if(rs.next()){
+				//DatabaseManager.getInstance().closeConnection(con);
+			return rs;
+			}
+			
+			else{
+				//DatabaseManager.getInstance().closeConnection(con);
+				return null;
+		}
+	}
+	
+	public List<LearnersLicenseApplication> extractAllApplicationsOfLicenseHolder(String aadhar) throws ClassNotFoundException, SQLException{
+		
+		
 		Connection con = DatabaseManager.getInstance().getDBConnection();
-		PreparedStatement stmt=con.prepareStatement("select * from llapplication where application_number = ?");  
 		
-		stmt.setString(1, appnum);
-		ResultSet rs=stmt.executeQuery();
+		PreparedStatement stmt=con.prepareStatement("select * from llapplication where aadhar = ?");  
+		stmt.setString(1, aadhar);
+		ResultSet rs=stmt.executeQuery();  
 		
-		if(rs.next()){
-			//DatabaseManager.getInstance().closeConnection(con);
-		return rs;
+		List<LearnersLicenseApplication> listOfApplications = new ArrayList<LearnersLicenseApplication>();
+		
+		while(rs.next()){
+			LearnersLicenseApplication lla = new LearnersLicenseApplication();
+			lla.setAppNum(rs.getString(2));
+			lla.setApplicationStatus(rs.getString(3));
+			lla.setLicenseType(rs.getString(4));
+			
+			
+			Date submissionDate = rs.getDate(5);
+			
+			lla.setLicenseSubmissionDate(submissionDate);
+			
+			listOfApplications.add(lla);
+		
 		}
 		
-		else{
-			//DatabaseManager.getInstance().closeConnection(con);
-			return null;
+		DatabaseManager.getInstance().closeConnection(con);
+		
+		return listOfApplications;
+		
 	}
-	}
+	
 }

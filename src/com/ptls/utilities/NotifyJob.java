@@ -1,10 +1,8 @@
 package com.ptls.utilities;
 
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set; 
 import java.util.Properties;
@@ -25,8 +23,26 @@ public class NotifyJob {
 
 				Set<String> aadharsToNotify = new LinkedHashSet<>();
 				
+				Map<String, String> notifyMsgs = new HashMap<>(); //First String is Aadhar, Second String is result
+				
+				boolean noAadharsToNotify = true;
+				
 				while(rs.next()){
+					noAadharsToNotify = false;
 					aadharsToNotify.add(rs.getString(1));
+					if(!notifyMsgs.containsKey(rs.getString(1))){
+						if(rs.getString(9).equals("Y") && rs.getString(9).equals("Y")){
+							notifyMsgs.put(rs.getString(1), "APPROVED");
+						}
+						else{
+							notifyMsgs.put(rs.getString(1), "REJECTED");
+						}
+					}
+				}
+				
+				if(noAadharsToNotify){
+					con.close();
+					return;
 				}
 				
 				System.out.println("here1");
@@ -40,24 +56,26 @@ public class NotifyJob {
 				System.out.println("here2");
 				params = sb.toString().substring(0, sb.length()-1);
 
-				Set<String> emailsToNotify = new LinkedHashSet<>();
+				Map<String, String> emailsToNotify = new HashMap<>();
 				System.out.println("here3");
-				PreparedStatement stmt2 = con.prepareStatement("select email_id from licenseholder where aadhar in (" +params +")");
+				PreparedStatement stmt2 = con.prepareStatement("select aadhar, email_id from licenseholder where aadhar in (" +params +")");
 				
 				ResultSet rs2=stmt2.executeQuery();
 				System.out.println("here4");
 				while(rs2.next()){
-					emailsToNotify.add(rs2.getString(1));
+					String message = notifyMsgs.get(rs2.getString(1));
+					emailsToNotify.put(rs2.getString(2), message);
 				}
 				
 				
 				System.out.println("here5");
 				sendEmail(emailsToNotify);
 				
-				PreparedStatement stmt3 = con.prepareStatement("update llapplication set notified = '1' where aadhar = ? and notified = '0'");
+				PreparedStatement stmt3 = con.prepareStatement("update llapplication set notified = '1', application_status = ? where aadhar = ? and notified = '0'");
 				
-				for(String e : aadharsToNotify){
-					stmt3.setString(1, e);					
+				for(Map.Entry<String, String> aadharAndMessage : notifyMsgs.entrySet()){
+					stmt3.setString(1, aadharAndMessage.getValue());
+					stmt3.setString(2, aadharAndMessage.getKey());					
 					stmt3.executeUpdate();
 				}
 				
@@ -67,7 +85,7 @@ public class NotifyJob {
 				System.out.println(e);}  
 		}
 
-	private static void sendEmail(Set<String> emailsToNotify) {
+	private static void sendEmail(Map<String, String> emailsToNotify) {
 		final String user = "";// change accordingly
 		final String pass = "";
 
@@ -88,8 +106,8 @@ public class NotifyJob {
 			MimeMessage message = new MimeMessage(session);
 			message.setFrom(new InternetAddress(user));
 			
-			for(String emailId : emailsToNotify){
-				message.addRecipient(Message.RecipientType.TO, new InternetAddress(emailId));
+			for(Map.Entry<String, String> emailIdAndMessage : emailsToNotify.entrySet()){
+				message.addRecipient(Message.RecipientType.TO, new InternetAddress(emailIdAndMessage.getKey()));
 			}
 			
 			message.setSubject("Your Driving License Application has been processed!");

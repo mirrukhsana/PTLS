@@ -561,6 +561,8 @@ ul {
 						ll2.setAppNum(ll.getAppNum());
 						ll2.setLicenseSubmissionDate(ll.getLicenseSubmissionDate());
 						ll2.setApplicationStatus(ll.getApplicationStatus());
+						ll2.setHealthStatus(ll.getHealthStatus());
+						ll2.setCroStatus(ll.getCroStatus());
 					}
 					else{
 						
@@ -573,6 +575,8 @@ ul {
 						ll2.setAppNum(ll.getAppNum());
 						ll2.setLicenseSubmissionDate(ll.getLicenseSubmissionDate());
 						ll2.setApplicationStatus(ll.getApplicationStatus());
+						ll2.setHealthStatus(ll.getHealthStatus());
+						ll2.setCroStatus(ll.getCroStatus());
 					}
 					
 				}
@@ -585,6 +589,8 @@ ul {
 					ll2.setAppNum(ll.getAppNum());
 					ll2.setLicenseSubmissionDate(ll.getLicenseSubmissionDate());
 					ll2.setApplicationStatus(ll.getApplicationStatus());
+					ll2.setHealthStatus(ll.getHealthStatus());
+					ll2.setCroStatus(ll.getCroStatus());
 				}
 				
 				if(llAppNum.equals(ll.getAppNum())){
@@ -671,6 +677,7 @@ ul {
 					<th>Applied For</th>
 					<th>License Type</th>
 					<th>Status</th>
+					<th>Remarks/Link</th>
 					</tr>
 					</thead>
 					
@@ -691,6 +698,25 @@ ul {
 						%> <%=appliedFor%></td>
 						<td><%=l.getLicenseType()%></td>
 						<td><%=l.getApplicationStatus()%></td>
+						<td><% 
+						if(l.getApplicationStatus().equals("REJECTED")){
+							out.print("Reason of rejectection : ");
+							if(l.getHealthStatus().equals("N") && l.getCroStatus().equals("N")){
+								out.print("<span style='color:red;'>Health Issues & Criminal check failed!</span>");
+							}
+							else if(l.getHealthStatus().equals("N")){
+								out.print("<span style='color:red;'>Health Issues!</span>");
+							}
+							else{
+								out.print("<span style='color:red;'>Criminal check failed!</span>");
+							}
+						} else if (l.getApplicationStatus().equals("APPROVED") && l.getAppNum().substring(0, 1).equals("A")){
+							out.print("<a href='#' style='color:green;'>Online Test</a>");
+						} else if (l.getApplicationStatus().equals("APPROVED") && l.getAppNum().substring(0, 1).equals("P")){
+							out.print("<a href='#' style='color:green;'>Book Slot</a>");
+						}
+						
+						%></td>
 						</tr>
 					<%} %>	
 					</tbody>

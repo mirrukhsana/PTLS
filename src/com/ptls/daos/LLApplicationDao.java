@@ -134,6 +134,8 @@ public class LLApplicationDao {
 			lla.setAppNum(rs.getString(2));
 			lla.setApplicationStatus(rs.getString(3));
 			lla.setLicenseType(rs.getString(4));
+			lla.setHealthStatus(rs.getString(9));
+			lla.setCroStatus(rs.getString(10));
 			
 			
 			Date submissionDate = rs.getDate(5);

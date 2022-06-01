@@ -31,7 +31,7 @@ public class NotifyJob {
 					noAadharsToNotify = false;
 					aadharsToNotify.add(rs.getString(1));
 					if(!notifyMsgs.containsKey(rs.getString(1))){
-						if(rs.getString(9).equals("Y") && rs.getString(9).equals("Y")){
+						if(rs.getString(9).equals("Y") && rs.getString(10).equals("Y")){
 							notifyMsgs.put(rs.getString(1), "APPROVED");
 						}
 						else{

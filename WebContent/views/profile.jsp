@@ -19,7 +19,7 @@
 	rel="stylesheet">
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 
-<title>profile</title>
+<title>Profile</title>
 
 <style type="text/css">
 
@@ -711,7 +711,7 @@ ul {
 								out.print("<span style='color:red;'>You Are a criminal!</span>");
 							}
 						} else if (l.getApplicationStatus().equals("APPROVED") && l.getAppNum().substring(0, 1).equals("A")){
-							out.print("<a href='#' style='color:green;'>Online Test</a>");
+							out.print("<a href='"+request.getContextPath()+"/views/onlinetest.jsp?appnum="+l.getAppNum()+"&aad="+aim.getAadhar()+"' style='color:green;'>Online Test</a>");
 						} else if (l.getApplicationStatus().equals("APPROVED") && l.getAppNum().substring(0, 1).equals("P")){
 							out.print("<a href='#' style='color:green;'>Book Slot</a>");
 						}

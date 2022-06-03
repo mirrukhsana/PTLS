@@ -709,7 +709,7 @@ ul {
 								out.print("<span style='color:red;'>Health Issues!</span>");
 							}
 							else{
-								out.print("<span style='color:red;'>Criminal check failed!</span>");
+								out.print("<span style='color:red;'>You Are a criminal!</span>");
 							}
 						} else if (l.getApplicationStatus().equals("APPROVED") && l.getAppNum().substring(0, 1).equals("A")){
 							out.print("<a href='"+request.getContextPath()+"/views/onlinetest.jsp?appnum="+l.getAppNum()+"&aad="+aim.getAadhar()+"' style='color:green;'>Online Test</a>");

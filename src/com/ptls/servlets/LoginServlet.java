@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.ptls.daos.PersonDao;
+import com.ptls.utilities.SecurityHandler;
 
 /**
  * Servlet implementation class LoginServlet
@@ -48,8 +49,8 @@ public class LoginServlet extends HttpServlet {
 		boolean isUserAutheticated = false;
 		
 		try {
-			
-			isUserAutheticated = p_dao.authenticateUser(request.getParameter("aadhar"), request.getParameter("password"));
+			String encryptedPassword = SecurityHandler.encryptPassword(request.getParameter("password"));
+			isUserAutheticated = p_dao.authenticateUser(request.getParameter("aadhar"), encryptedPassword);
 			
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();

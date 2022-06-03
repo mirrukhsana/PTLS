@@ -524,11 +524,12 @@ ul {
 </style>
 
 </head>
-<body>
-
 <c:if test="${aadhar == null}">
 	<% response.sendRedirect(request.getContextPath()+"/");%>
 </c:if>
+<body>
+
+
 
         <%
 			AadharAccessDao aad = new AadharAccessDao();

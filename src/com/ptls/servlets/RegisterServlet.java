@@ -14,6 +14,7 @@ import com.ptls.daos.AadharAccessDao;
 import com.ptls.daos.PersonDao;
 import com.ptls.models.AadharInfoModel;
 import com.ptls.models.LicenseHolderModel;
+import com.ptls.utilities.SecurityHandler;
 
 /**
  * Servlet implementation class RegisterServlet
@@ -74,7 +75,15 @@ public class RegisterServlet extends HttpServlet {
 			
 			licenseHolder.setAadhar(aadhar);
 			licenseHolder.setEmailId(request.getParameter("emailId"));
-			licenseHolder.setPassword(request.getParameter("password"));
+			
+			String encryptedPassword=null;
+			try {
+				encryptedPassword = SecurityHandler.encryptPassword(request.getParameter("password"));
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+			
+			licenseHolder.setPassword(encryptedPassword);
 		
 			System.out.println(licenseHolder); 
 		

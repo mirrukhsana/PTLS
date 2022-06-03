@@ -106,5 +106,24 @@ public class PersonDao {
 		
 		return doesAadharExist;
 	}
+		
+		public String getPasswordOfAadhar(String aadhar) throws ClassNotFoundException, SQLException{
+			
+			Connection con = DatabaseManager.getInstance().getDBConnection();
+			
+			PreparedStatement stmt=con.prepareStatement("select * from licenseholder where aadhar = ?");  
+			stmt.setString(1, aadhar);
+			ResultSet rs=stmt.executeQuery();  
+			
+			String password = null;
+			
+			if(rs.next()){
+				password = rs.getString("password");
+			}
+			
+			DatabaseManager.getInstance().closeConnection(con);
+			
+			return password;
+		}
 	
 }

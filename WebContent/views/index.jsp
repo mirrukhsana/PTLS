@@ -45,15 +45,21 @@
 			</form>
 				<div class="hr"></div>
 				<div class="foot-lnk">
-					<a href="#forgot">Forgot Password?</a>
+					<a href="<%= request.getContextPath()%>/views/ForgetPassword.jsp">Forgot Password?</a>
 				</div>
 			</div>
 			<div class="sign-up-htm">
 			<form id="signupForm" action="register" method="post" onsubmit="return validateMyForm();">
 				
-				<c:if test='${requestScope["isUserAuthenticatedSignup"] == "0"}'>
+			<c:if test='${requestScope["isUserAuthenticatedSignup"] == "0"}'>
 				<div class="group">
-					<p id='errorMsg2' style="color: red;" >Aadhar Does'nt exist!</p>
+					<p id='errorMsg2' style="color: red;" >Aadhar or Email Doesn't exist in Aadhar service!</p>
+				</div>
+			</c:if>
+			
+			<c:if test='${requestScope["isUserAuthenticatedSignup"] == "1"}'>
+				<div class="group">
+					<p id='alreadyRegisteredError' style="color: red;" >Already Registered!</p>
 				</div>
 			</c:if>
 				
@@ -63,26 +69,26 @@
 				
 				<div class="group">
 					<label for="aadhar" class="label">Aadhar</label>
-					<input id="aadhar" name="aadhar" type="number" class="input">
+					<input id="aadhar" name="aadhar" type="number" class="input" required>
 				</div>
 				<div class="group">
 					<label for="emailId" class="label">Email Address</label>
-					<input id="emailId" name="emailId" type="text" class="input">
+					<input id="emailId" name="emailId" type="text" class="input" required>
 				</div>
 				<div class="group">
 					<label for="pass" class="label">Password</label>
-					<input id="pass" name="password" type="password" class="input" data-type="password">
+					<input id="pass" name="password" type="password" class="input" data-type="password" required>
 				</div>
 				<div class="group">
 					<label for="confirmPass" class="label">Repeat Password</label>
-					<input id="confirmPass" name="confirmPassword" type="password" class="input" data-type="password">
+					<input id="confirmPass" name="confirmPassword" type="password" class="input" data-type="password" required>
 				</div>
 				<div class="group">
 					<input id="submitButton" type="submit" class="button" value="Sign Up">
 				</div>
 				<div class="hr"></div>
 				<div class="foot-lnk">
-					<label for="tab-1">Already Member?</a>
+					<label for="tab-1">Already Member?</label>
 				</div>
 			</form>
 			</div>
@@ -97,11 +103,21 @@
 		document.getElementById("submitButton").disabled = true;
 		
 		var aadhar = document.getElementById("aadhar").value;
+		
 		var emailId = document.getElementById("emailId").value;
+		
 		var password = document.getElementById("pass").value;
-
+		
 		var errorMsg2 = document.getElementById("errorMsg2");
-		errorMsg2.style.display = "none";
+		
+		var alreadyRegisteredError = document.getElementById("alreadyRegisteredError");
+		if(errorMsg2 != null){
+			errorMsg2.style.display = "none";
+		}
+		
+		if(alreadyRegisteredError != null){
+			alreadyRegisteredError.style.display = "none";
+		}
 		var confirmPass = document.getElementById("confirmPass").value;
 		
 		if (isNaN(aadhar)){
@@ -189,7 +205,6 @@
 		var password = document.getElementById("password").value;
 		
 		if (isNaN(aadhar)){
-			//alert(aadhar);
 			document.getElementById("errorMsgLogin").innerHTML = "Aadhar number is invalid";
 			document.getElementById("errorMsgLogin").style.display = "";
 			document.getElementById("loginButton").disabled = false;
@@ -226,7 +241,7 @@
 } */
 	
 </script>
-<% if (request.getAttribute("isUserAuthenticatedSignup") == "0"){%>
+<% if (request.getAttribute("isUserAuthenticatedSignup") == "0" || request.getAttribute("isUserAuthenticatedSignup") == "1"){%>
 		<script type="text/javascript">
 		document.getElementById("tab-2").click();
 		</script>

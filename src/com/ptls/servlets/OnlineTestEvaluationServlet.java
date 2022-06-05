@@ -3,11 +3,14 @@ package com.ptls.servlets;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.ptls.constants.Constants;
+import com.ptls.daos.LicenseDao;
 import com.ptls.daos.QuestionBankDao;
 
 /**
@@ -86,11 +90,31 @@ public class OnlineTestEvaluationServlet extends HttpServlet {
 			
 			if(marksObtained >= (Constants.NUMBER_OF_QUESTIONS_REQUIRED*4)){
 				finalResult = Constants.PASS;
+				
+				Date issueDate = new Date();
+				
+				Date expiryDate = calculateExpiryForLearningLicense(issueDate);
+				
+				insertLearningLicense(aadhar, app_num, new Date(),expiryDate);
+				
 			}
 			else
 				finalResult = Constants.FAIL;
 			
 			qbd.updateOnlineTestResult(marksObtained, finalResult, aadhar, app_num);
+			
+			if(finalResult.equals(Constants.PASS)){
+				request.setAttribute("userPassedTheTest", "1");
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/views/LearnersLicense.jsp");
+				
+				dispatcher.forward(request, response);
+			}
+			else{
+				request.setAttribute("userPassedTheTest", "0");
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/views/profile.jsp");
+				
+				dispatcher.forward(request, response);
+			}
 			
 		} catch (ClassNotFoundException e1) {
 			e1.printStackTrace();
@@ -99,6 +123,24 @@ public class OnlineTestEvaluationServlet extends HttpServlet {
 			e1.printStackTrace();
 		}
 		
+	}
+
+	private void insertLearningLicense(String aadhar, String app_num, Date issueDate, Date expiryDate) {
+		
+		LicenseDao ld = new LicenseDao();
+		try {
+			ld.addLicense(aadhar, app_num, issueDate, expiryDate);
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+	private Date calculateExpiryForLearningLicense(Date issueDate) {
+		Calendar cal = Calendar.getInstance(); 
+		cal.add(Calendar.MONTH, 6);
+		Date expiryDate = cal.getTime();
+		return expiryDate;
 	}
 
 }

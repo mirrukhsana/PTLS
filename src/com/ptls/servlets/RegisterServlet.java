@@ -47,11 +47,13 @@ public class RegisterServlet extends HttpServlet {
 		
 		System.out.println("TESTING!!!");
 		
-		boolean verified = false;
+		boolean aadharVerified = false;
+		boolean emailExistsInAadharDb = false;
 		
 		LicenseHolderModel licenseHolder = new LicenseHolderModel();
 		
 		long aadhar = Long.parseLong(request.getParameter("aadhar"));
+		String emailId = request.getParameter("emailId");
 		
 		AadharInfoModel aim = new AadharInfoModel();
 		aim.setAadhar(aadhar+"");
@@ -59,8 +61,9 @@ public class RegisterServlet extends HttpServlet {
 		try{
 			
 			AadharAccessDao aad = new AadharAccessDao();
-			verified = aad.verifyAadhar(aadhar+"");
+			aadharVerified = aad.verifyAadhar(aadhar+"");
 			
+			emailExistsInAadharDb = aad.verifyEmailAssociatedWithAadhar(aadhar+"", emailId); 
 			
 		}catch (SQLException e) {
 			System.out.println("DB Problem");
@@ -71,44 +74,48 @@ public class RegisterServlet extends HttpServlet {
 		}
 		
 		
-		if(verified){
+		if(aadharVerified && emailExistsInAadharDb){
 			
-			licenseHolder.setAadhar(aadhar);
-			licenseHolder.setEmailId(request.getParameter("emailId"));
+				licenseHolder.setAadhar(aadhar);
+				licenseHolder.setEmailId(request.getParameter("emailId"));
+				
+				String encryptedPassword=null;
+				try {
+					encryptedPassword = SecurityHandler.encryptPassword(request.getParameter("password"));
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+				
+				licenseHolder.setPassword(encryptedPassword);
 			
-			String encryptedPassword=null;
+				System.out.println(licenseHolder); 
+			
+				PersonDao p_dao = new PersonDao();
+			
 			try {
-				encryptedPassword = SecurityHandler.encryptPassword(request.getParameter("password"));
-			} catch (Exception e1) {
-				e1.printStackTrace();
+				p_dao.addLicenseHolder(licenseHolder);
+				request.getSession().setAttribute("aadhar", aadhar+"");
+			} catch (SQLException e) {
+				System.out.println("DB Problem");
+				e.printStackTrace();
+				request.setAttribute("isUserAuthenticatedSignup", "1");
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/");
+				
+				dispatcher.forward(request, response);
+				return;
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 			
-			licenseHolder.setPassword(encryptedPassword);
-		
-			System.out.println(licenseHolder); 
-		
-			PersonDao p_dao = new PersonDao();
-		
-		try {
-			p_dao.addLicenseHolder(licenseHolder);
-		} catch (SQLException e) {
-			System.out.println("DB Problem");
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			response.sendRedirect(request.getContextPath() + "/");
 		}
-		request.getSession().setAttribute("aadhar", aadhar+"");
-		
-		response.sendRedirect(request.getContextPath() + "/");
+		else{
+			
+			request.setAttribute("isUserAuthenticatedSignup", "0");
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/");
+			
+			dispatcher.forward(request, response);
+		}
 	}
-	
-	else{
-		
-		request.setAttribute("isUserAuthenticatedSignup", "0");
-		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/");
-		
-		dispatcher.forward(request, response);
-	}
-}
 }

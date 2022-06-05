@@ -10,7 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.ptls.daos.AadharAccessDao;
 import com.ptls.daos.PersonDao;
+import com.ptls.models.AadharInfoModel;
 import com.ptls.utilities.SecurityHandler;
 
 /**
@@ -60,7 +62,14 @@ public class LoginServlet extends HttpServlet {
 		
 		if(isUserAutheticated){
 			request.getSession().setAttribute("aadhar", request.getParameter("aadhar"));
-			System.out.println("Session Set : "+request.getSession().getAttribute("aadhar"));
+			//System.out.println("Session Set : "+request.getSession().getAttribute("aadhar"));
+			try {
+				AadharInfoModel aim = (new AadharAccessDao()).getUserDataUsingAadharNumber(request.getParameter("aadhar"));
+				//System.out.println("NAMEE : "+aim.getFull_name());
+				request.getSession().setAttribute("aim", aim);
+			} catch (ClassNotFoundException | SQLException e) {
+				e.printStackTrace();
+			}
 			response.sendRedirect(request.getContextPath() + "/views/oneloginportal.jsp");
 		}
 		else{

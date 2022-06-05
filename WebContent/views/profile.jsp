@@ -528,7 +528,13 @@ ul {
 	<% response.sendRedirect(request.getContextPath()+"/");%>
 </c:if>
 <body>
-
+<%
+	if(request.getAttribute("userPassedTheTest") != null){
+		if(request.getAttribute("userPassedTheTest").equals("0")){
+%>
+<script type="text/javascript"> alert("You have Failed the test!"); </script>
+		
+<%}}%>
 
 
         <%

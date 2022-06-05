@@ -13,4 +13,13 @@ public class Constants {
 	public static final String PASS = "PASS";
 	
 	public static final String FAIL = "FAIL";
+
+	public static final String ISSUED = "I";
+	
+	public static final String EXPIRED = "E";
+	
+	public static final String SUSPENDED = "S";
+	
+	public static final String CANCELLED = "C";
+		
 }

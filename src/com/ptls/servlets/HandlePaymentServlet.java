@@ -131,7 +131,7 @@ public class HandlePaymentServlet extends HttpServlet {
 		
 		//Success Email
 		System.out.println("sending email to : "+((AadharInfoModel)(request.getSession().getAttribute("aam"))).getEmailAddress());
-		Mailer.send(((AadharInfoModel)(request.getSession().getAttribute("aam"))).getEmailAddress(), "Application Suucessful", htmlmessage);
+		Mailer.send(((AadharInfoModel)(request.getSession().getAttribute("aam"))).getEmailAddress(), "Application Successful", htmlmessage);
 		
 		//send Invoice page
 		response.sendRedirect(request.getContextPath() + "/views/invoice.jsp");

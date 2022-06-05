@@ -7,7 +7,7 @@
 <head>
 
     <title>PTLS - Login</title>
-    <link href="css/ptls_1.css" rel="stylesheet" type="text/css">
+    <link href="<%= request.getContextPath()%>/css/ptls_1.css" rel="stylesheet" type="text/css">
 
 </head>
 
@@ -26,6 +26,11 @@
 			<c:if test='${requestScope["isUserAuthenticated"] == "0"}'>
 				<div class="group">
 					<p id='errorMsg' style="color: red;" >Invalid Credentials!</p>
+				</div>
+			</c:if>
+			<c:if test='${requestScope["isPasswordChanged"] == "1"}'>
+				<div class="group">
+					<p id='errorMsg' style="color: #90EE90;" >Password Changed successfully!</p>
 				</div>
 			</c:if>
 				<div class="group">

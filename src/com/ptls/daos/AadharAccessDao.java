@@ -83,4 +83,21 @@ public boolean verifyAadhar(String aadhar) throws ClassNotFoundException, SQLExc
 	DatabaseManager.getInstance().closeConnection(con);
 	return verified;
 }
+
+public boolean verifyEmailAssociatedWithAadhar(String aadhar, String emailId) throws ClassNotFoundException, SQLException {
+	Connection con = DatabaseManager.getInstance().getConnectionOfAadharDB();
+	PreparedStatement stmt=con.prepareStatement("select * from aadharmock where aadhar = ? and email = ?");  
+	stmt.setString(1, aadhar);
+	stmt.setString(2, emailId);
+	ResultSet rs=stmt.executeQuery(); 
+	
+	boolean verified = false;
+	
+	if(rs.next()){
+		
+		verified = true;
+	}
+	DatabaseManager.getInstance().closeConnection(con);
+	return verified;
+}
 }

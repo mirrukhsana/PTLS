@@ -1,3 +1,4 @@
+<%@page import="com.ptls.constants.Constants"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.ptls.models.LearnersLicenseApplication"%>
 <%@page import="com.ptls.daos.LLApplicationDao"%>
@@ -689,7 +690,16 @@ ul {
 					</thead>
 					
 					<tbody>
-					<% int i=0; for (LearnersLicenseApplication l : lla2){ i++;%>
+					<% int i=0; for (LearnersLicenseApplication l : lla2){ 
+						
+						i++;
+						
+						LLApplicationDao lld = new LLApplicationDao();
+						
+						//null if test not given yet. Otherwise Pass or Fail
+						String onlineTestResultForLL = lld.getonlineTestResultUsingAppNum(l.getAppNum());
+					
+					%>
 						
 						<tr>
 						<td><%=i%></td>
@@ -717,9 +727,17 @@ ul {
 							else{
 								out.print("<span style='color:red;'>You Are a criminal!</span>");
 							}
-						} else if (l.getApplicationStatus().equals("APPROVED") && l.getAppNum().substring(0, 1).equals("A")){
+						} 
+						else if (l.getApplicationStatus().equals("APPROVED") && l.getAppNum().substring(0, 1).equals("A") && (onlineTestResultForLL == null)){
 							out.print("<a href='"+request.getContextPath()+"/views/onlinetest.jsp?appnum="+l.getAppNum()+"&aad="+aim.getAadhar()+"' style='color:green;'>Online Test</a>");
-						} else if (l.getApplicationStatus().equals("APPROVED") && l.getAppNum().substring(0, 1).equals("P")){
+						}
+						else if (l.getApplicationStatus().equals("APPROVED") && l.getAppNum().substring(0, 1).equals("A") && (onlineTestResultForLL.equals(Constants.PASS))){
+							out.print("<a href='"+request.getContextPath()+"/views/LearnersLicense.jsp?appnum="+l.getAppNum()+"&aad="+aim.getAadhar()+"' style='color:green;'>View Learners License</a>");
+						}
+						else if (l.getApplicationStatus().equals("APPROVED") && l.getAppNum().substring(0, 1).equals("A") && (onlineTestResultForLL.equals(Constants.FAIL))){
+							out.print("Failed in Test");
+						}  
+						else if (l.getApplicationStatus().equals("APPROVED") && l.getAppNum().substring(0, 1).equals("P")){
 							out.print("<a href='#' style='color:green;'>Book Slot</a>");
 						}
 						

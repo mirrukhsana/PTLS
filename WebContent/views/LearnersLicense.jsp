@@ -4,6 +4,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
  <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -335,12 +336,12 @@ ul {
 	if(aim == null){
 		aim = new AadharInfoModel();
 	}
-
+	if(request.getAttribute("userPassedTheTest") != null){
 	if(request.getAttribute("userPassedTheTest").equals("1")){
 %>
 <script type="text/javascript"> alert("You have passed the test! Below is your Learners License. Please take a print out of it for yourself."); </script>
 		
-<%}%>
+<%}}%>
 
 	<div class="container">
 	    <!-- Navigation -->
@@ -376,8 +377,8 @@ ul {
 		</div>
 		<div class='card-number'>
 			<p>L-JK01 <%= year %> <%= lic_part %></p>
-			<h6><%=aim.getFull_name() %></h6>
-			<h6>Issue Date : <%= lm.getIssueDate() %> - Expiry Date : <%= lm.getExpiryDate() %></h6>
+			<h4><%=aim.getFull_name() %></h4>
+			<h5>Issue Date : <fmt:formatDate type = "date" value = "<%= lm.getIssueDate() %>" />  - Expiry Date : <fmt:formatDate type = "date" value = "<%= lm.getExpiryDate() %>" /></h5>
 		</div>
 		<div class='bottom-block'>
 			<div class='balance'>

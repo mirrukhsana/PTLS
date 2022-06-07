@@ -386,8 +386,8 @@ ul {
 				<div class='card-balance'></div>
 			</div>
 			<div class='card-icon'>
-				<span class='circle-left'> <i class="icon-circle icon-3x "></i>
-				</span> <i class="icon-circle icon-3x"></i>
+				<span class='circle-left'> <i class="icon-truck icon-3x "></i>
+				</span> <i class="icon-ok-sign icon-3x"></i>
 			</div>
 		</div>
 	</div>

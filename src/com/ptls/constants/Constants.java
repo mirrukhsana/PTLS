@@ -6,9 +6,9 @@ public class Constants {
 	
 	public static final String PROCESSING = "PROCESSING";
 	
-	public static final int NUMBER_OF_QUESTIONS_REQUIRED = 5;
+	public static final int NUMBER_OF_QUESTIONS_REQUIRED = 8;
 	
-	public static final int NUMBER_OF_QUESTIONS_IN_DB = 13;
+	public static final int NUMBER_OF_QUESTIONS_IN_DB = 25;
 
 	public static final String PASS = "PASS";
 	

@@ -101,14 +101,15 @@
 }
 
 body {
-	background-color: #eee;
+	background-color: rgb(99, 39, 120);
+}
 }
 
 label.radio {
 	cursor: pointer;
 }
 
-label.radio input {
+span.radio input {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -116,21 +117,20 @@ label.radio input {
 	pointer-events: none;
 }
 
-label.radio span {
+span.radio {
 	padding: 4px 0px;
-	border: 1px solid red;
-	display: inline-block;
-	color: red;
-	width: 100px;
+	display: inline;
+	color: green;
+	width: 10px;
 	text-align: center;
 	border-radius: 3px;
 	margin-top: 7px;
-	text-transform: uppercase;
+	text-transform: lowercase;
 }
 
-label.radio input:checked+span {
-	border-color: red;
-	background-color: red;
+span.radio input:checked+span {
+	border-color: black;
+	background-color: green;
 	color: #fff;
 }
 
@@ -188,7 +188,7 @@ label.radio input:checked+span {
 						<div
 							class="d-flex flex-row justify-content-between align-items-center mcq">
 							<h4>Learning License - Online Test</h4>
-							<span>(5 Questions each having 5 marks. Pass percentage is 80%)</span>
+							<span>(8 Questions each having 8 marks. Pass percentage is 80%)</span>
 						</div>
 					</div>
 					<form action="<%=getServletContext().getContextPath()%>/evaluate" method="post" >
@@ -210,24 +210,24 @@ label.radio input:checked+span {
 							<h5 class="mt-1 ml-2"><%=qbm.getQuestionDesc()%></h5>
 						</div>
 						<div class="ans ml-2">
-							<label class="radio"> <input type="radio" name="<%=qbm.getQuestionId()%>"
-								value="a"> <span><%=qbm.getOptionA()%></span>
-							</label>
+							<input type="radio" name="<%=qbm.getQuestionId()%>"
+								value="a"> a.<span class="radio"> <%=qbm.getOptionA()%></span>
+							
 						</div>
 						<div class="ans ml-2">
-							<label class="radio"> <input type="radio" name="<%=qbm.getQuestionId()%>"
-								value="b"> <span><%=qbm.getOptionB()%></span>
-							</label>
+							 <input type="radio" name="<%=qbm.getQuestionId()%>"
+								value="b"> b.<span class="radio"> <%=qbm.getOptionB()%></span>
+							
 						</div>
 						<div class="ans ml-2">
-							<label class="radio"> <input type="radio"
-								value="c" name="<%=qbm.getQuestionId()%>"> <span><%=qbm.getOptionC()%></span>
-							</label>
+							 <input type="radio"
+								value="c" name="<%=qbm.getQuestionId()%>"> c.<span class="radio"> <%=qbm.getOptionC()%></span>
+							
 						</div>
 						<div class="ans ml-2">
-							<label class="radio"> <input type="radio" name="<%=qbm.getQuestionId()%>"
-								value="d"> <span><%=qbm.getOptionD()%></span>
-							</label>
+							 <input type="radio" name="<%=qbm.getQuestionId()%>"
+								value="d">d.<span class="radio"> <%=qbm.getOptionD()%></span>
+							
 						</div>
 					</div>
 					<%}%>

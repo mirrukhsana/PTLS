@@ -23,7 +23,7 @@ public class Mailer {
 			protected PasswordAuthentication getPasswordAuthentication() {
 				return new PasswordAuthentication(user, pass);
 			}
-		});
+		}); 
 		// 2nd step)compose message
 		try {
 			MimeMessage message = new MimeMessage(session);

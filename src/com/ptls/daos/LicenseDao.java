@@ -13,49 +13,68 @@ import com.ptls.utilities.DatabaseManager;
 
 public class LicenseDao {
 	
-public boolean addLicense(String aadhar, String app_num, Date issueDate, Date expiryDate) throws SQLException, ClassNotFoundException{
+	public boolean addLicense(String aadhar, String app_num, Date issueDate, Date expiryDate) throws SQLException, ClassNotFoundException{
+			
+			Connection con = DatabaseManager.getInstance().getDBConnection();
+			
+			PreparedStatement stmt=con.prepareStatement("insert into licenseinfo (aadhar, application_number, issue_date, expiry_date, lic_status) values(?,?,?,?,?)");
+			stmt.setString(1, aadhar);
+			stmt.setString(2, app_num);
+			stmt.setDate(3, (new java.sql.Date(issueDate.getTime())));
+			stmt.setDate(4, (new java.sql.Date(expiryDate.getTime())));
+			stmt.setString(5, Constants.ISSUED);
+			
+			int noOfQueriesExecuted = stmt.executeUpdate();
+			
+			DatabaseManager.getInstance().closeConnection(con);
+			
+			if(noOfQueriesExecuted == 1){
+				return true;
+			}
+			else{
+				return false;
+			}
+		}
+	
+	public LicenseModel getUserLicenseUsingAadharNumber(String aadhar) throws ClassNotFoundException, SQLException{
 		
 		Connection con = DatabaseManager.getInstance().getDBConnection();
 		
-		PreparedStatement stmt=con.prepareStatement("insert into licenseinfo (aadhar, application_number, issue_date, expiry_date, lic_status) values(?,?,?,?,?)");
+		PreparedStatement stmt=con.prepareStatement("select * from licenseinfo where aadhar = ?");  
 		stmt.setString(1, aadhar);
-		stmt.setString(2, app_num);
-		stmt.setDate(3, (new java.sql.Date(issueDate.getTime())));
-		stmt.setDate(4, (new java.sql.Date(expiryDate.getTime())));
-		stmt.setString(5, Constants.ISSUED);
+		ResultSet rs=stmt.executeQuery();  
 		
-		int noOfQueriesExecuted = stmt.executeUpdate();
+		LicenseModel licenseModel = null;
+		
+		if(rs.next()){
+			licenseModel = new LicenseModel();
+			licenseModel.setAadhar(aadhar);
+			licenseModel.setIssueDate(new Date(rs.getDate("issue_date").getTime()));
+			licenseModel.setExpiryDate(new Date(rs.getDate("expiry_date").getTime()));
+			licenseModel.setLicID(rs.getString("lic_id"));
+		}
 		
 		DatabaseManager.getInstance().closeConnection(con);
 		
-		if(noOfQueriesExecuted == 1){
-			return true;
-		}
-		else{
-			return false;
-		}
-	}
-
-public LicenseModel getUserLicenseUsingAadharNumber(String aadhar) throws ClassNotFoundException, SQLException{
-	
-	Connection con = DatabaseManager.getInstance().getDBConnection();
-	
-	PreparedStatement stmt=con.prepareStatement("select * from licenseinfo where aadhar = ?");  
-	stmt.setString(1, aadhar);
-	ResultSet rs=stmt.executeQuery();  
-	
-	LicenseModel licenseModel = null;
-	
-	if(rs.next()){
-		licenseModel = new LicenseModel();
-		licenseModel.setAadhar(aadhar);
-		licenseModel.setIssueDate(new Date(rs.getDate("issue_date").getTime()));
-		licenseModel.setExpiryDate(new Date(rs.getDate("expiry_date").getTime()));
-		licenseModel.setLicID(rs.getString("lic_id"));
+		return licenseModel;
 	}
 	
-	DatabaseManager.getInstance().closeConnection(con);
-	
-	return licenseModel;
-}
+	public String getLicenseTypesUsingAadhar(String aadhar) throws ClassNotFoundException, SQLException{
+		Connection con = DatabaseManager.getInstance().getDBConnection();
+		
+		PreparedStatement stmt=con.prepareStatement("select * from llapplication where application_number = (select application_number from licenseinfo where aadhar = ?)");  
+		stmt.setString(1, aadhar);
+		ResultSet rs=stmt.executeQuery();  
+		
+		String testResult = "";
+		
+		while(rs.next()){
+			//This loop will run only once because every app_num will have only result
+			testResult = testResult + rs.getString("licensetype") +",";
+		}
+		
+		DatabaseManager.getInstance().closeConnection(con);
+		
+		return testResult.substring(0, testResult.length()-1);
+	}
 }

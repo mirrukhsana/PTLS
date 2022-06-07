@@ -171,4 +171,23 @@ public class LLApplicationDao {
 		return testResult;
 	}
 	
+	public String getLicenseTypesUsingAppNum(String app_num) throws ClassNotFoundException, SQLException{
+		Connection con = DatabaseManager.getInstance().getDBConnection();
+		
+		PreparedStatement stmt=con.prepareStatement("select * from llapplication where application_number = ?");  
+		stmt.setString(1, app_num);
+		ResultSet rs=stmt.executeQuery();  
+		
+		String testResult = "";
+		
+		while(rs.next()){
+			//This loop will run only once because every app_num will have only result
+			testResult = testResult + rs.getString("licensetype") +", ";
+		}
+		
+		DatabaseManager.getInstance().closeConnection(con);
+		
+		return testResult.substring(0, testResult.length()-1);
+	}
+	
 }

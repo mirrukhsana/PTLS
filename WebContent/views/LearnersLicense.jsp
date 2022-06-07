@@ -77,7 +77,7 @@ ul {
   display: inline-block;
   width:500px;
   height:155px;
-  margin-top: -30px;
+  margin-top: -38px;
 }
 .card-chip{
   float:left;
@@ -92,7 +92,7 @@ ul {
 }
 .card-number{
   font-size: 28px;
-  margin: -60px 0 0 0;
+  margin: -74px 0 0 0;
   text-align-last: center; 
 }
 .balance{
@@ -332,6 +332,8 @@ ul {
 	
 	String lic_part = String.format("%05d", Integer.parseInt(lm.getLicID()));
 	String year = (lm.getIssueDate().getYear()+1900) + "";
+	
+	String licenseType = ld.getLicenseTypesUsingAadhar(aadhar);
 
 	if(aim == null){
 		aim = new AadharInfoModel();
@@ -379,6 +381,7 @@ ul {
 			<p>L-JK01 <%= year %> <%= lic_part %></p>
 			<h4><%=aim.getFull_name() %></h4>
 			<h5>Issue Date : <fmt:formatDate type = "date" value = "<%= lm.getIssueDate() %>" />  - Expiry Date : <fmt:formatDate type = "date" value = "<%= lm.getExpiryDate() %>" /></h5>
+			<h5>Licenses : <%=licenseType %></h5>
 		</div>
 		<div class='bottom-block'>
 			<div class='balance'>

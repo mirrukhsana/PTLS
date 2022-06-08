@@ -290,10 +290,12 @@ ul {
       	</div>
       </a>
      <%}%>
-      <div style="border-style: outset;">
-      <img src="http://localhost:8080/PTLS/imgs/driverslicensebkg.png" alt="" />
-        <h3>Apply for Driving License</h3>
-      </div>
+     <a href="<%= request.getContextPath()%>/views/applyfordrivinglicense.jsp">
+	      <div style="border-style: outset;">
+	      <img src="http://localhost:8080/PTLS/imgs/driverslicensebkg.png" alt="" />
+	        <h3>Apply for Driving License</h3>
+	      </div>
+     </a>
     </section>
 </div>
  

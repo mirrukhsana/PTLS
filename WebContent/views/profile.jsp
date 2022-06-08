@@ -615,11 +615,8 @@ ul {
 					licenseTypeCombined = "";
 					lla2.add(ll2);
 				}
-			}
-			
-			
-		%>
-		
+			}	
+		%>		
 		
 <div class="container">
     <!-- Navigation -->
@@ -639,7 +636,7 @@ ul {
       <div class="panel">
           <div class="user-heading round">
               <a href="#">
-                  <img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="">
+                  <img src="http://localhost:8080/PTLS/imgs/<%=aim.getPhoto_url()%>.jpg" alt="">
               </a>
               <h1><%out.print(aim.getFull_name());%></h1>
               <p><%out.print(aim.getEmailAddress());%></p>
@@ -781,7 +778,6 @@ ul {
   </div>
 </div>
 </div>
-
 		
 </body>
 

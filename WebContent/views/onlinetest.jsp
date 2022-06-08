@@ -147,6 +147,23 @@ span.radio input:checked+span {
 	outline: 0 !important;
 	box-shadow: none !important;
 }
+
+.toto {
+
+      width: 200px;
+      height: 200px;
+      border: 2px solid black;
+      position: absolute;
+      margin-top : 5px;
+      margin-left: 5px;
+    }
+video {
+      width: 200px;
+      height: 200px;
+      object-fit: cover;
+      position: relative;
+    }
+
 </style>
 
 </head>
@@ -171,8 +188,9 @@ span.radio input:checked+span {
 		
 	%>
 
-
-
+	<div class="toto">
+	  <video id="vid"></video>
+	</div>
 	<div class="container">
 		<!-- Navigation -->
 		<nav class="main-nav"> <img
@@ -248,7 +266,32 @@ span.radio input:checked+span {
 <script type="text/javascript">
 	window.onload = function() {
 		alert("Pressing the back button will make you fail the test. Please, don't hit back button!");
+		grabImage();
 	};
+	
+	 function grabImage() {
+		   var video = document.getElementById("vid");
+		   var mediaDevices = navigator.mediaDevices;
+		   vid.muted = true;
+
+		     // Accessing the user camera and video.
+		     mediaDevices
+		       .getUserMedia({
+		         video: true,
+		         audio: true,
+		       })
+		       .then((stream) => {
+
+		         // Changing the source of video to current stream.
+		         video.srcObject = stream;
+		         video.addEventListener("loadedmetadata", () => {
+		           video.play();
+		         });
+		       })
+		       .catch(alert);
+		 }
+	
 </script>
+
 </body>
 </html>

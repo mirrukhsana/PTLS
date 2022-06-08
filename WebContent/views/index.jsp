@@ -1,6 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
+<% 
+	response.setHeader("Pragma", "No-cache");
+	response.setHeader("Cache-Control", "no-cache");
+	response.setHeader("Cache-Control","no-store");
+	response.setDateHeader("Expires", -1);
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 
@@ -8,6 +14,8 @@
 
     <title>PTLS - Login</title>
     <link href="<%= request.getContextPath()%>/css/ptls_1.css" rel="stylesheet" type="text/css">
+    <META HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE"> 
+	<META HTTP-EQUIV="Expires" CONTENT="-1">
 
 </head>
 

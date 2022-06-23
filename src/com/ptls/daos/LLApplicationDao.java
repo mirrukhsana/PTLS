@@ -251,9 +251,10 @@ public class LLApplicationDao {
 		Connection con = DatabaseManager.getInstance().getDBConnection();
 		
 		PreparedStatement stmt=con.prepareStatement("select * from llapplication where aadhar = ? and application_status='APPROVED' and application_submission_date = "
-				+ "(select MAX(application_submission_date) where aadhar = ?)");  
+				+ "(select MAX(application_submission_date) from llapplication where aadhar = ?) and application_number = (select MAX(application_number) from llapplication where aadhar = ?)");  
 		stmt.setString(1, aadhar);
 		stmt.setString(2, aadhar);
+		stmt.setString(3, aadhar);
 		ResultSet rs=stmt.executeQuery();  
 		
 		List<LearnersLicenseApplication> listOfApplications = new ArrayList<LearnersLicenseApplication>();

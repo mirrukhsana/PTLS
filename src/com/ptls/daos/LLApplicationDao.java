@@ -60,6 +60,10 @@ public class LLApplicationDao {
 			if(rs.getString(9).equals("N") || rs.getString(10).equals("N")){
 				isLatestLLApplicationRejected = true;
 			}
+			
+			if(checkIfLastOnlineTestFailed(aadhar)){
+				isLatestLLApplicationRejected = true;
+			}
 			doesLL_APPL_exist = true;
 		}
 		else{
@@ -80,6 +84,24 @@ public class LLApplicationDao {
 		
 		DatabaseManager.getInstance().closeConnection(con);
 		return isApplyLLVisible;
+	}
+
+	private boolean checkIfLastOnlineTestFailed(String aadhar) throws ClassNotFoundException, SQLException {
+		Connection con = DatabaseManager.getInstance().getDBConnection();
+		
+		PreparedStatement stmt=con.prepareStatement("select * from onlinetestresult where application_number = (select max(application_number) from llapplication where aadhar = ?) and final_result = 'FAIL'");  
+		stmt.setString(1, aadhar);
+		ResultSet rs=stmt.executeQuery();  
+		
+		boolean result = false;
+		
+		if(rs.next()) result = true;
+		else result = false;
+		
+		rs.close();
+		con.close();
+		
+		return result;
 	}
 
 	public String extractLastAppnumber() throws ClassNotFoundException, SQLException{

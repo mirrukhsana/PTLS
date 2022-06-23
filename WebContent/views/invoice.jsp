@@ -290,7 +290,7 @@ ul {
      <table style="width:100%; height:auto;  text-align:center; " BORDER=0 CELLSPACING=0>
        <thead style="background:#fafafa; padding:8px;">
          <tr style="font-size: 20px;">
-           <td colspan="4" style="padding:20px 20px;text-align: left;">Learner License Billing</td>
+           <td colspan="4" style="padding:20px 20px;text-align: left;">License Billing</td>
          </tr>
        </thead>
        <tbody style="background:#ffff;padding:20px;">

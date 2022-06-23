@@ -85,6 +85,14 @@ public class LicenseDao {
 			licenseModel.setIssueDate(new Date(rs.getDate("issue_date").getTime()));
 			licenseModel.setExpiryDate(new Date(rs.getDate("expiry_date").getTime()));
 			licenseModel.setLicID(rs.getString("lic_id"));
+			licenseModel.setAppnum(rs.getString("application_number"));
+			
+			String licenseStatus = "";
+			if(rs.getString("lic_status").equals("I")){
+				licenseStatus = "Issued";
+			}
+			
+			licenseModel.setLicStatus(licenseStatus);
 		}
 		
 		DatabaseManager.getInstance().closeConnection(con);

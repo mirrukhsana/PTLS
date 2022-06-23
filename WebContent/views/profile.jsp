@@ -1,3 +1,5 @@
+<%@page import="com.ptls.models.LicenseModel"%>
+<%@page import="com.ptls.daos.LicenseDao"%>
 <%@page import="com.ptls.constants.Constants"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.ptls.models.LearnersLicenseApplication"%>
@@ -9,6 +11,7 @@
  <%@page import="java.util.Date"%>
  <%@page import="com.ptls.models.AadharInfoModel"%>
 <%@page import="com.ptls.daos.AadharAccessDao"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -622,6 +625,9 @@ ul {
 			}
 			
 			lla2.addAll(dla);
+			
+			LicenseModel lm = (new LicenseDao().getUserLicenseUsingAadharNumber(aadh));
+			
 		%>		
 		
 <div class="container">
@@ -771,6 +777,7 @@ ul {
       <hr />
       
       <br /><br />
+      <%if(lm != null){ %>
       <h4 style="text-align: center;">License Information</h4>
       <br />
               <div class="col-md-12">
@@ -779,24 +786,25 @@ ul {
 					<tr>
 					<th>S.No.</th>
 					<th>Application No</th>
-					<th>Submission Date</th>
-					<th>Applied For</th>
-					<th>Status</th>
+					<th>Issue Date</th>
+					<th>Expiry Date</th>
+					<th>License Status</th>
 					</tr>
 					</thead>
 					
 					<tbody>
 						<tr>
-						<td>Cell</td>
-						<td>Cell</td>
-						<td>Cell</td>
-						<td>Cell</td>
-						<td>Cell</td>
+						<td>1</td>
+						<td><%=lm.getAppnum()%></td>
+						<td><fmt:formatDate type = "date" value = "<%= lm.getIssueDate() %>" /></td>
+						<td><fmt:formatDate type = "date" value = "<%= lm.getExpiryDate() %>" /></td>
+						<td><%=lm.getLicStatus()%></td>
 						</tr>
 						<tr>
 					</tbody>
 					</table>
               </div>
+            <%} %>
           </div>
       </div>
   </div>

@@ -36,6 +36,7 @@ public class LoginServlet extends HttpServlet {
 			if(req.getParameter("param").equals("logout")){
 				if(req.getSession().getAttribute("aadhar") != null){
 					req.getSession().setAttribute("aadhar", null);
+					req.getSession().setAttribute("admin", null);
 				}
 			}
 		}
@@ -46,6 +47,12 @@ public class LoginServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		if(((String)request.getParameter("aadhar")).equals("admin")){
+			request.getSession().setAttribute("admin", "admin");
+			response.sendRedirect(request.getContextPath() + "/views/adminhome.jsp");
+			return;
+		}
 		
 		PersonDao p_dao = new PersonDao();
 		boolean isUserAutheticated = false;

@@ -549,6 +549,10 @@ ul {
 			
 			List<LearnersLicenseApplication> lla = (new LLApplicationDao()).extractAllApplicationsOfLicenseHolder(aadh);
 			
+			List<LearnersLicenseApplication> dla = (new LLApplicationDao()).extractAllDLApplicationsOfLicenseHolder(aadh);
+			
+			//lla.addAll(dla);
+			
 			//Logic for Combining similar application data
 			
 			List<LearnersLicenseApplication> lla2 = new ArrayList<LearnersLicenseApplication>();
@@ -615,7 +619,9 @@ ul {
 					licenseTypeCombined = "";
 					lla2.add(ll2);
 				}
-			}	
+			}
+			
+			lla2.addAll(dla);
 		%>		
 		
 <div class="container">
@@ -625,6 +631,7 @@ ul {
 
       <ul class="main-menu">
         <li><a href="<%= request.getContextPath()%>/views/ptlshome.jsp">Home</a></li>
+        <li><a href="<%= request.getContextPath()%>/views/complaint.jsp">Complaint </a></li>
         <li><a href="<%=request.getContextPath()%>/login?param=logout">Logout</a></li>
       </ul>
 		</nav>
@@ -702,15 +709,26 @@ ul {
 						<td><%=i%></td>
 						<td><%=l.getAppNum()%></td>
 						<td><%=l.getLicenseSubmissionDate()%></td>
-						<td><% String appliedFor = ""; if(l.getAppNum().substring(0, 1).equals("A")){appliedFor="Learners License";}
-						else if (l.getAppNum().substring(0, 1).equals("P")){
-							appliedFor="Main License";
-						}
-						else if (l.getAppNum().substring(0, 1).equals("R")){
-							appliedFor="Renewal License";
-						}
+						<td>
+						<% 
+						
+							String appliedFor = ""; 
+							String interrimAppStatus = ""; 
+							
+							if(l.getAppNum().substring(0, 1).equals("A")){
+								interrimAppStatus = l.getApplicationStatus();
+								appliedFor="Learners License";
+							}
+							else if (l.getAppNum().substring(0, 1).equals("M")){
+								interrimAppStatus = "Pending Final Result!";
+								appliedFor="Main License";
+							}
+							else if (l.getAppNum().substring(0, 1).equals("R")){
+								appliedFor="Renewal License";
+							}
 						%> <%=appliedFor%></td>
 						<td><%=l.getLicenseType()%></td>
+						
 						<td><%=l.getApplicationStatus()%></td>
 						<td><% 
 						if(l.getApplicationStatus().equals("REJECTED")){
@@ -734,8 +752,14 @@ ul {
 						else if (l.getApplicationStatus().equals("APPROVED") && l.getAppNum().substring(0, 1).equals("A") && (onlineTestResultForLL.equals(Constants.FAIL))){
 							out.print("Failed in Test");
 						}  
-						else if (l.getApplicationStatus().equals("APPROVED") && l.getAppNum().substring(0, 1).equals("P")){
+						/* else if (l.getApplicationStatus().equals("APPROVED") && l.getAppNum().substring(0, 1).equals("P")){
 							out.print("<a href='#' style='color:green;'>Book Slot</a>");
+						}   */
+						else if (l.getApplicationStatus().equals("Pending Driving Test") && l.getAppNum().substring(0, 1).equals("M")){
+							out.print("<a href='#' style='color:green;'>Pending Driving Test</a>");
+						}
+						else if (l.getApplicationStatus().equals("Approved") && l.getAppNum().substring(0, 1).equals("M")){
+							out.print("<a href='"+request.getContextPath()+"/views/DrivingLicense.jsp?appnum="+l.getAppNum()+"&aad="+aim.getAadhar()+"&lic=M' style='color:green;'>View Drivers License</a>");
 						}
 						
 						%></td>

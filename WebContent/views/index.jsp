@@ -217,6 +217,10 @@
 		var aadhar = document.getElementById("user").value;
 		var password = document.getElementById("password").value;
 		
+		if(aadhar == "admin"){
+			return true;
+		}
+		
 		if (isNaN(aadhar)){
 			document.getElementById("errorMsgLogin").innerHTML = "Aadhar number is invalid";
 			document.getElementById("errorMsgLogin").style.display = "";

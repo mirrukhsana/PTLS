@@ -253,4 +253,28 @@ public class PersonDao {
 			return false;
 		}
 	}
+	
+	public LicenseHolderModel getLicenseHolder4Details(String aadhar) throws ClassNotFoundException, SQLException{
+		
+		Connection con = DatabaseManager.getInstance().getDBConnection();
+		
+		PreparedStatement stmt=con.prepareStatement("select * from licenseholder where aadhar = ?");  
+		stmt.setString(1, aadhar);
+		ResultSet rs=stmt.executeQuery();  
+		
+		LicenseHolderModel lhm = null;
+		
+		if(rs.next()){
+			//System.out.println("Aadhar exists!"+rs.getString(1));
+			lhm = new LicenseHolderModel();
+			lhm.setBloodGroup(rs.getString("blood_group"));
+			lhm.setEmergencyMobNo(rs.getString("emergency_mobile_number"));
+			lhm.setIdentificationMark(rs.getString("identification_mark"));
+			lhm.setPlaceOfBirth(rs.getString("place_of_birth"));
+		}
+		
+		DatabaseManager.getInstance().closeConnection(con);
+		
+		return lhm;
+	}
 }

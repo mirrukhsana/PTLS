@@ -1,3 +1,4 @@
+<%@page import="com.ptls.models.AadharInfoModel"%>
 <%@page import="com.ptls.daos.LicenseDao"%>
 <%@page import="com.ptls.daos.LLApplicationDao"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -240,6 +241,43 @@ ul {
     margin-bottom: 20px;
   }
 }
+
+
+
+/* for complaint form */
+/* Style inputs with type="text", select elements and textareas */
+input[type=text], select, textarea {
+  width: 100%; /* Full width */
+  padding: 12px; /* Some padding */ 
+  border: 1px solid #ccc; /* Gray border */
+  border-radius: 4px; /* Rounded borders */
+  box-sizing: border-box; /* Make sure that padding and width stays in place */
+  margin-top: 6px; /* Add a top margin */
+  margin-bottom: 16px; /* Bottom margin */
+  resize: vertical /* Allow the user to vertically resize the textarea (not horizontally) */
+}
+
+/* Style the submit button with a specific background color etc */
+input[type=submit] {
+  background-color: #04AA6D;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* When moving the mouse over the submit button, add a darker green color */
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+/* Add a background color and some padding around the form */
+.container2 {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
 </style>
 </head>
 <body>
@@ -247,25 +285,6 @@ ul {
     <i class="fas fa-bars fa-2x"></i>
   </div>
   
-<%	
-	boolean isLLApplyVisible = (new LLApplicationDao()).applyLL_isVisible(((String)request.getSession().getAttribute("aadhar")));
-
-	String aadhar = ((String)request.getSession().getAttribute("aadhar"));
-
-	boolean canApplyForMainLicense = false;
-	
-	if(aadhar != null){
-		canApplyForMainLicense = (new LicenseDao().canApplyForMainLicense(aadhar));
-	}
-	
-String complaintParam = request.getParameter("complaintparam");
-
-if(complaintParam != null){
-
-%>
-<script type="text/javascript"> alert("Your complaint has been sent to the PTLS Team! They will contact you very soon."); </script>
-
-<%} %>
 <c:if test="${aadhar == null}">
 	<% response.sendRedirect(request.getContextPath()+"/");%>
 </c:if>
@@ -276,7 +295,6 @@ if(complaintParam != null){
 
       <ul class="main-menu">
         <li><a href="<%= request.getContextPath()%>/views/profile.jsp">My Profile (<%= request.getSession().getAttribute("aadhar")%>)</a></li>
-        <li><a href="<%= request.getContextPath()%>/views/complaint.jsp">Complaint </a></li>
         <li><a href="<%=request.getContextPath()%>/login?param=logout">Logout</a></li>
       </ul>
 
@@ -298,26 +316,23 @@ if(complaintParam != null){
     <header class="showcase">
       <h2>Public Transport Licensing System</h2>
     </header>
+<% AadharInfoModel aim = (AadharInfoModel) request.getSession().getAttribute("aim"); %>
+ <div class="container2">
+  <form action="<%=getServletContext().getContextPath()%>/complaint" method="post">
 
-    <!-- Home cards 1 -->
-    <section class="home-cards">
-    <%if(isLLApplyVisible) {%>
-      <a href="<%= request.getContextPath()%>/views/applyforlearners.jsp">
-      	<div style="border-style: outset;">
-      		<img src="http://localhost:8080/PTLS/imgs/learnerslicensebkg.png" alt="" />
-        	<h4>Apply for Learner's License</h4>
-      	</div>
-      </a>
-     <%}%>
-     <%if(canApplyForMainLicense) {%>
-     <a href="<%= request.getContextPath()%>/views/applyfordrivinglicense.jsp">
-	      <div style="border-style: outset;">
-	      <img src="http://localhost:8080/PTLS/imgs/driverslicensebkg.png" alt="" />
-	        <h3>Apply for Driving License</h3>
-	      </div>
-     </a>
-     <%}%>
-    </section>
+    <label for="fname">Name</label>
+    <input type="text" id="fname" name="name" disabled="disabled" value="<%= aim.getFull_name()%>">
+
+    <label for="country">Email</label>
+    <input type="text" id="email" name="email" disabled="disabled" value="<%= aim.getEmailAddress()%>">
+
+    <label for="subject">Complaint</label>
+    <textarea id="subject" name="complaint" placeholder="Write your complaint.." style="height:200px"></textarea>
+
+    <input type="submit" value="Submit">
+
+  </form>
+</div>
 </div>
  
 </body>

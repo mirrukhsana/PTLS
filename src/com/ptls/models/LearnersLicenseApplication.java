@@ -14,6 +14,9 @@ public class LearnersLicenseApplication {
 	private String croStatus;
 	private String notifiedStatus;
 	
+	//Included as part of DL application. Using this class for both, LL and DL
+	private Date drivingTestDate;
+	
 	private Date licenseSubmissionDate;
 	
 	public String getAadhar() {
@@ -81,6 +84,12 @@ public class LearnersLicenseApplication {
 	}
 	public void setLicenseSubmissionDate(Date licenseSubmissionDate) {
 		this.licenseSubmissionDate = licenseSubmissionDate;
+	}
+	public Date getDrivingTestDate() {
+		return drivingTestDate;
+	}
+	public void setDrivingTestDate(Date drivingTestDate) {
+		this.drivingTestDate = drivingTestDate;
 	}
 	@Override
 	public String toString() {

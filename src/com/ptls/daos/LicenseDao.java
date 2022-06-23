@@ -112,11 +112,13 @@ public class LicenseDao {
 		boolean alreadyAppliedForDL = false;
 		PreparedStatement stmt2=con.prepareStatement("select * from dlapplication where aadhar = ? and application_status = 'Pending Driving Test'");  
 		stmt2.setString(1, aadhar);
-		ResultSet rs2=stmt.executeQuery();  
+		ResultSet rs2=stmt2.executeQuery();  
 		
 		if(rs2.next()){
 			alreadyAppliedForDL = true;
 		}
+		
+		System.out.println("$$$$$$$$$$$$$$$$$$ "+applicationNum +" "+expiryDateOfCurrentLic +" "+alreadyAppliedForDL);
 		
 		//Both of the conditions should be true
 		boolean conditionOfHavingLearnersLicense = false;
@@ -145,6 +147,9 @@ public class LicenseDao {
 		
 		DatabaseManager.getInstance().closeConnection(con);
 		
+		System.out.println(canApplyForMainLicense);
+		
+		System.out.println(conditionOfHavingLearnersLicense+" "+conditionOfHavingLearnersExpiryGreaterThanCurrentDate+" "+alreadyAppliedForDL);
 		return canApplyForMainLicense;
 	}
 	

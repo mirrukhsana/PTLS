@@ -764,6 +764,9 @@ ul {
 						else if (l.getApplicationStatus().equals("Pending Driving Test") && l.getAppNum().substring(0, 1).equals("M")){
 							out.print("<a href='#' style='color:green;'>Pending Driving Test</a>");
 						}
+						else if (l.getApplicationStatus().equals("Pending Renewal Approval") && l.getAppNum().substring(0, 1).equals("M")){
+							out.print("<a href='#' style='color:green;'>Pending Admin Approval</a>");
+						}
 						else if (l.getApplicationStatus().equals("Approved") && l.getAppNum().substring(0, 1).equals("M")){
 							out.print("<a href='"+request.getContextPath()+"/views/DrivingLicense.jsp?appnum="+l.getAppNum()+"&aad="+aim.getAadhar()+"&lic=M' style='color:green;'>View Drivers License</a>");
 						}

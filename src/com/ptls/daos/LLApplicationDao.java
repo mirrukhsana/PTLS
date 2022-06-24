@@ -322,7 +322,7 @@ public class LLApplicationDao {
 	public List<LearnersLicenseApplication> getAllPendingDLApplications() throws ClassNotFoundException, SQLException{
 		Connection con = DatabaseManager.getInstance().getDBConnection();
 		
-		PreparedStatement stmt=con.prepareStatement("select * from dlapplication where application_status='Pending Driving Test'");  
+		PreparedStatement stmt=con.prepareStatement("select * from dlapplication where application_status='Pending Driving Test' or application_status='Pending Renewal Approval'");  
 		
 		ResultSet rs=stmt.executeQuery();  
 		

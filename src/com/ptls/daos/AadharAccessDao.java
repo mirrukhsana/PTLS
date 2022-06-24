@@ -59,7 +59,8 @@ private String calculateAge(Date dob) {
 	    
 	    System.out.println(d2 +" "+d1);
 	    
-	    int age = (d2 - d1) / 10000;                                                       
+	    int age = (d2 - d1) / 10000;     
+	    System.out.println("Age is : "+age);                                                  
 	    return age+"";
 	}
 	else {

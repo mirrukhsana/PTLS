@@ -335,7 +335,7 @@ ul {
 	         </tr>
          </c:forEach>
 	         <tr>
-		           <td style="width:20%;margin-left:10px;text-align: center;"> <%if(request.getSession().getAttribute("dlForm") != null){out.print("DL Form Fee ");} else {out.print("Online Test");}%> </td>
+		           <td style="width:20%;margin-left:10px;text-align: center;"> <%if(request.getSession().getAttribute("dlForm") != null){out.print("DL Form Fee ");} else if(request.getSession().getAttribute("rlForm") != null){out.print("Renewal Form Fee ");} else {out.print("Online Test");}%> </td>
 		           <td style="width:20%;padding: 10px;text-align: center;">1</td>
 		           <td style="idth:20%;padding: 10px;text-align:center;font-size:13px;">50 Rs.</td>
 		         </tr>

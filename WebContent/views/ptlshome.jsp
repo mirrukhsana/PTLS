@@ -18,8 +18,8 @@
 
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: #fff;
-  color: #000;
+   background-image: url("http://localhost:8080/PTLS/imgs/ptls-back.jpg") no-repeat center center/cover;
+ 
   font-size: 15px;
   line-height: 1.5;
 }

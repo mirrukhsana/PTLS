@@ -251,7 +251,7 @@ ul {
     <!-- Nav -->
     <nav class="main-nav">
       <img src="http://localhost:8080/PTLS/imgs/OneLogin.png" alt="OneLogin" class="logo">
-
+<!--  
       <ul class="main-menu">
         <li><a href="<%= request.getContextPath()%>/views/profile.jsp">My Profile (<%= request.getSession().getAttribute("aadhar")%>)</a></li>
         <li><a href="<%=request.getContextPath()%>/login?param=logout">Logout</a></li>
@@ -269,6 +269,7 @@ ul {
           </a>
         </li>
       </ul>
+      -->
     </nav>
 
     <!-- Showcase -->

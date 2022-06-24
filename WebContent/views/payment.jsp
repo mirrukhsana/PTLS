@@ -198,7 +198,7 @@ span.price {
     <c:forEach items="${typeOfLicenses}" var="lic">
       <p>${lic} <span class="price">150</span></p>
 	</c:forEach>
-		<p><% if(request.getSession().getAttribute("dlForm") != null){out.print("DL Form Fee ");} else{out.print("Online Test Fee ");}%> <span class="price">50</span></p>
+		<p><% if(request.getSession().getAttribute("dlForm") != null){out.print("DL Form Fee ");} else if(request.getSession().getAttribute("rlForm") != null){out.print("Renewal Form Fee ");} else{out.print("Online Test Fee ");}%> <span class="price">50</span></p>
       <hr>
       <p>Total <span class="price" style="color:black"><b>${totalAmount}</b></span></p>
     </div>

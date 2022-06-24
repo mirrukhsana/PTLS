@@ -1,3 +1,6 @@
+<%@page import="java.util.Date"%>
+<%@page import="com.ptls.daos.PersonDao"%>
+<%@page import="com.ptls.models.LicenseHolderModel"%>
 <%@page import="com.ptls.models.AadharInfoModel"%>
 <%@page import="com.ptls.daos.AadharAccessDao"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -59,7 +62,7 @@ body {
 	border: solid 1px #BA68C8
 }
 </style>
-<title>Apply for Learners</title>
+<title>Apply for Main License</title>
 </head>
 <body>
 	<c:if test="${aadhar == null}">
@@ -70,21 +73,19 @@ body {
 	<div class="container rounded bg-white mt-5 mb-5">
 		<%
 			AadharAccessDao aad = new AadharAccessDao();
+			PersonDao pd = new PersonDao();
 			AadharInfoModel aam = null;
+			LicenseHolderModel lhm = null;
 			String aadh = (String) request.getSession().getAttribute("aadhar");
 
 			if (aadh != "null") {
 				aam = aad.getUserDataUsingAadharNumber(aadh);
 				request.getSession().setAttribute("aam", aam);
-			}
-			
-			boolean isEligibleToApplyAsPerAge = true;
-			
-			if(Integer.parseInt(aam.getAge()) < 18){
-				isEligibleToApplyAsPerAge = false;
+				
+				lhm = pd.getLicenseHolder4Details(aadh);
 			}
 		%>
-		<%if(!isEligibleToApplyAsPerAge){%><h3>Sorry! You are not applicable for applying as your age is below 18</h3><%} else {%>
+		
 		<c:if test="${aadhar != null}">
 			<div class="row">
 				<div class="col-md-3 border-right">
@@ -99,12 +100,11 @@ body {
 				</div>
 				<!--  -->
 				<div class="col-md-5 border-right">
-				<form action="<%=getServletContext().getContextPath()%>/applyLL" method="post" enctype="multipart/form-data" onsubmit="return validateApplyForm();">
+				<form action="<%=getServletContext().getContextPath()%>/applyRL" method="post" >
 					<div class="p-3 py-5">
 						<div
 							class="d-flex justify-content-between align-items-center mb-3">
 							<h4 class="text-right">Application for Learner's License</h4>
-							
 						</div>
 						<div class="row mt-2">
 							<div class="col-md-12">
@@ -167,81 +167,30 @@ body {
 						</div>
 						<div class="row mt-3">
 							<div class="col-md-6">
-								<label class="labels">Place of Birth</label><input required
-									id="placeOfBirthId" type="text" class="form-control"
-									placeholder="Place of Birth" value="" name="placeOfBirth">
+								<label class="labels">Place of Birth</label><input
+									id="placeOfBirthId" type="text" class="form-control" disabled="disabled"
+									 value="<%=lhm.getPlaceOfBirth()%>" name="placeOfBirth">
 							</div>
 							<div class="col-md-6">
 								<label class="labels">Blood Group</label>
-								<select id="bloodGroupId" required class="form-control" name="bloodGroup">
-									<option value="">Select Blood Group</option>
-									<option value="A+">A+VE</option>
-									<option value="A-">A-VE</option>
-									<option value="B+">B+VE</option>
-									<option value="B-">B-VE</option>
-									<option value="O+">O+VE</option>
-									<option value="O-">O-VE</option>
-									<option value="AB+">AB+VE</option>
-									<option value="AB-">AB-VE</option>
-								</select>
+								<input
+									id="placeOfBirthId" type="text" class="form-control" disabled="disabled"
+									 value="<%=lhm.getBloodGroup()%>" name="bloodGroup">
 							</div>
 						</div>
 						<div class="row mt-3">
 							<div class="col-md-6">
-								<label class="labels">Emergency Mobile Number</label><input required
+								<label class="labels">Emergency Mobile Number</label><input 
 									id="emergencyMobileNumberId" type="text" class="form-control"
-									placeholder="Mob. No." value="" name="emergencyMobNo">
+									 value="<%=lhm.getEmergencyMobNo()%>" disabled="disabled" name="emergencyMobNo">
 							</div>
 							<div class="col-md-6">
-								<label class="labels">Identification Mark</label><input required
-									id="identificationMarkId" autocomplete = "off" type="text" class="form-control"
-									value="" placeholder="Identification Mark" name="identificationMark">
-							</div>
-						</div>
-
-						<div class="row mt-3">
-							<div class="col-md-12">
-								<h5>Upload Documents</h5>
+								<label class="labels">Identification Mark</label><input
+									id="identificationMarkId" type="text" class="form-control"
+									value="<%=lhm.getIdentificationMark()%>" disabled="disabled" name="identificationMark">
 							</div>
 						</div>
 						
-						<div class="row mt-3">
-							<div class="col-md-4">
-								<label class="labels">Address Proof Document</label>
-								<input required
-									id="addressProofId" type="file" name="addressProof" class="form-control" accept="image/jpeg, application/pdf">
-							</div>
-							<div class="col-md-4">
-								<label class="labels">Date of Birth Document</label>
-								<input required
-									id="dobDocId" type="file" name="dobDoc" class="form-control" accept="image/jpeg,application/pdf">
-							</div>
-							<div class="col-md-4">
-								<label class="labels">Signature (png/jpg)</label>
-								<input required
-									id="signatureId" type="file" class="form-control" name="signature" accept="image/jpeg,application/pdf">
-							</div>
-						</div>
-						
-						<div class="row mt-3">
-							<div class="col-md-12">
-								<h5>Type of License/'s</h5>
-							</div>
-						</div>
-						
-						<div class="row mt-3">
-							<label class="labels">Select the licenses you want to apply for</label>
-								<select required
-									id="typeOfLicId" class="form-control" name="typeOfLic" multiple> 
-									<option value="MC 50cc">MC 50cc</option>
-									<option value="LMV-NT">LMV-NT</option>
-									<option value="FVG">FVG</option>
-									<option value="MC EX50CC">MC EX50CC</option>
-									<option value="MCWG">MCWG</option>
-									<option value="HGMV">HGMV</option>
-									<option value="HPMV">HPMV</option>
-								</select>
-						</div>
 						
 						<div class="mt-5 text-center">
 							<input id="nextButtonId" class="btn btn-primary profile-button"
@@ -273,7 +222,7 @@ body {
 					</div>
 				</div>
 			</div>
-		</c:if> <%} %>
+		</c:if>
 	</div>
 	
 <% 
@@ -284,16 +233,7 @@ body {
 	
 </body>
 <script type="text/javascript">
-	function validateApplyForm(){
-		var emergencyMobileNumber = document.getElementById("emergencyMobileNumberId").value;
-		
-		if (isNaN(emergencyMobileNumber) || emergencyMobileNumber.length != 10){
-			alert("Mobile Number Invalid!");
-			return false;
-		}
-		
-		
-	}
+	
 </script>
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>

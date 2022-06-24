@@ -290,7 +290,7 @@ ul {
      <table style="width:100%; height:auto;  text-align:center; " BORDER=0 CELLSPACING=0>
        <thead style="background:#fafafa; padding:8px;">
          <tr style="font-size: 20px;">
-           <td colspan="4" style="padding:20px 20px;text-align: left;">Learner License Billing</td>
+           <td colspan="4" style="padding:20px 20px;text-align: left;">License Billing</td>
          </tr>
        </thead>
        <tbody style="background:#ffff;padding:20px;">
@@ -335,7 +335,7 @@ ul {
 	         </tr>
          </c:forEach>
 	         <tr>
-		           <td style="width:20%;margin-left:10px;text-align: center;"> <%if(request.getSession().getAttribute("dlForm") != null){out.print("DL Form Fee ");} else {out.print("Online Test");}%> </td>
+		           <td style="width:20%;margin-left:10px;text-align: center;"> <%if(request.getSession().getAttribute("dlForm") != null){out.print("DL Form Fee ");} else if(request.getSession().getAttribute("rlForm") != null){out.print("Renewal Form Fee ");} else {out.print("Online Test");}%> </td>
 		           <td style="width:20%;padding: 10px;text-align: center;">1</td>
 		           <td style="idth:20%;padding: 10px;text-align:center;font-size:13px;">50 Rs.</td>
 		         </tr>

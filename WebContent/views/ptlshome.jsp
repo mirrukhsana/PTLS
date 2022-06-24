@@ -258,6 +258,12 @@ ul {
 		canApplyForMainLicense = (new LicenseDao().canApplyForMainLicense(aadhar));
 	}
 	
+	boolean canApplyForRenewal = false;
+	
+	if(aadhar != null){
+		canApplyForRenewal = (new LicenseDao().canApplyForRenewal(aadhar));
+	}
+	
 String complaintParam = request.getParameter("complaintparam");
 
 if(complaintParam != null){
@@ -314,6 +320,14 @@ if(complaintParam != null){
 	      <div style="border-style: outset;">
 	      <img src="http://localhost:8080/PTLS/imgs/driverslicensebkg.png" alt="" />
 	        <h3>Apply for Driving License</h3>
+	      </div>
+     </a>
+     <%}%>
+     <%if(canApplyForRenewal) {%>
+     <a href="<%= request.getContextPath()%>/views/applyforrenewal.jsp">
+	      <div style="border-style: outset;">
+	      <img src="http://localhost:8080/PTLS/imgs/driverslicensebkg.png" alt="" />
+	        <h3>Apply for Renewal</h3>
 	      </div>
      </a>
      <%}%>

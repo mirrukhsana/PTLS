@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -85,6 +87,14 @@ public class LicenseDao {
 			licenseModel.setIssueDate(new Date(rs.getDate("issue_date").getTime()));
 			licenseModel.setExpiryDate(new Date(rs.getDate("expiry_date").getTime()));
 			licenseModel.setLicID(rs.getString("lic_id"));
+			licenseModel.setAppnum(rs.getString("application_number"));
+			
+			String licenseStatus = "";
+			if(rs.getString("lic_status").equals("I")){
+				licenseStatus = "Issued";
+			}
+			
+			licenseModel.setLicStatus(licenseStatus);
 		}
 		
 		DatabaseManager.getInstance().closeConnection(con);
@@ -153,6 +163,45 @@ public class LicenseDao {
 		return canApplyForMainLicense;
 	}
 	
+	public boolean canApplyForRenewal(String aadhar) throws ClassNotFoundException, SQLException{
+		
+		Connection con = DatabaseManager.getInstance().getDBConnection();
+		
+		PreparedStatement stmt=con.prepareStatement("select * from licenseinfo where aadhar = ?");  
+		stmt.setString(1, aadhar);
+		ResultSet rs=stmt.executeQuery();  
+		
+		String applicationNum = null;
+		Date expiryDateOfCurrentLic = null;
+		
+		if(rs.next()){
+			applicationNum = rs.getString("application_number");
+			expiryDateOfCurrentLic = new Date(rs.getDate("expiry_date").getTime());
+		}
+		else{
+			return false;
+		}
+		
+		Calendar cal =  Calendar.getInstance();
+		cal.add(Calendar.MONTH, 2);
+		
+		Date dt = cal.getTime();
+		
+		boolean result = false;
+		
+		if(expiryDateOfCurrentLic.getTime() <= dt.getTime()){
+			result = true;
+		}
+		else{
+			result = false;
+		}
+		
+		rs.close();
+		DatabaseManager.getInstance().closeConnection(con);
+		
+		return result;
+	}
+	
 	public String getLicenseTypesUsingAadhar(String aadhar) throws ClassNotFoundException, SQLException{
 		Connection con = DatabaseManager.getInstance().getDBConnection();
 		
@@ -189,5 +238,31 @@ public class LicenseDao {
 		DatabaseManager.getInstance().closeConnection(con);
 		
 		return testResult.substring(0, testResult.length()-1);
+	}
+	
+	public List<String> getAllEmailsWhoseLicWillExpireIn2monthsOrHasAlreadyExpired() throws ClassNotFoundException, SQLException{
+		Connection con = DatabaseManager.getInstance().getDBConnection();
+		
+		PreparedStatement stmt=con.prepareStatement
+				("select email_id from licenseholder where aadhar in (select aadhar from licenseinfo where expiry_date <= ? and (SUBSTRING(application_number,1,1) = 'M'))"); 
+		
+		Calendar cal = Calendar.getInstance(); 
+		cal.add(Calendar.MONTH, 2);
+		Date date2MonthsAheadOfCurrentDate = cal.getTime();
+		
+		stmt.setDate(1, new java.sql.Date(date2MonthsAheadOfCurrentDate.getTime()));
+		ResultSet rs=stmt.executeQuery();  
+		
+		List<String> emailIds = new ArrayList<String>();
+		
+		while(rs.next()){
+			String emailId = rs.getString(1);
+			emailIds.add(emailId);
+		}
+		
+		rs.close();
+		DatabaseManager.getInstance().closeConnection(con);
+		
+		return emailIds;
 	}
 }

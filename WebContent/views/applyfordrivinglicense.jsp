@@ -92,7 +92,7 @@ body {
 					<div
 						class="d-flex flex-column align-items-center text-center p-3 py-5">
 						<img class="rounded-circle mt-5" width="150px"
-							src="http://localhost:8080/PTLS/imgs/<%=aam.getPhoto_url()%>.webp"><span
+							src="http://localhost:8080/PTLS/imgs/<%=aam.getPhoto_url()%>.jpg"><span
 							class="font-weight-bold"><%=aam.getFull_name()%></span><span
 							class="text-black-50"><%=aam.getEmailAddress()%></span><span>
 						</span>

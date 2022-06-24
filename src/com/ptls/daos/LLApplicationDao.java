@@ -60,6 +60,10 @@ public class LLApplicationDao {
 			if(rs.getString(9).equals("N") || rs.getString(10).equals("N")){
 				isLatestLLApplicationRejected = true;
 			}
+			
+			if(checkIfLastOnlineTestFailed(aadhar)){
+				isLatestLLApplicationRejected = true;
+			}
 			doesLL_APPL_exist = true;
 		}
 		else{
@@ -80,6 +84,24 @@ public class LLApplicationDao {
 		
 		DatabaseManager.getInstance().closeConnection(con);
 		return isApplyLLVisible;
+	}
+
+	private boolean checkIfLastOnlineTestFailed(String aadhar) throws ClassNotFoundException, SQLException {
+		Connection con = DatabaseManager.getInstance().getDBConnection();
+		
+		PreparedStatement stmt=con.prepareStatement("select * from onlinetestresult where application_number = (select max(application_number) from llapplication where aadhar = ?) and final_result = 'FAIL'");  
+		stmt.setString(1, aadhar);
+		ResultSet rs=stmt.executeQuery();  
+		
+		boolean result = false;
+		
+		if(rs.next()) result = true;
+		else result = false;
+		
+		rs.close();
+		con.close();
+		
+		return result;
 	}
 
 	public String extractLastAppnumber() throws ClassNotFoundException, SQLException{
@@ -229,9 +251,10 @@ public class LLApplicationDao {
 		Connection con = DatabaseManager.getInstance().getDBConnection();
 		
 		PreparedStatement stmt=con.prepareStatement("select * from llapplication where aadhar = ? and application_status='APPROVED' and application_submission_date = "
-				+ "(select MAX(application_submission_date) where aadhar = ?)");  
+				+ "(select MAX(application_submission_date) from llapplication where aadhar = ?) and application_number = (select MAX(application_number) from llapplication where aadhar = ?)");  
 		stmt.setString(1, aadhar);
 		stmt.setString(2, aadhar);
+		stmt.setString(3, aadhar);
 		ResultSet rs=stmt.executeQuery();  
 		
 		List<LearnersLicenseApplication> listOfApplications = new ArrayList<LearnersLicenseApplication>();
@@ -299,7 +322,7 @@ public class LLApplicationDao {
 	public List<LearnersLicenseApplication> getAllPendingDLApplications() throws ClassNotFoundException, SQLException{
 		Connection con = DatabaseManager.getInstance().getDBConnection();
 		
-		PreparedStatement stmt=con.prepareStatement("select * from dlapplication where application_status='Pending Driving Test'");  
+		PreparedStatement stmt=con.prepareStatement("select * from dlapplication where application_status='Pending Driving Test' or application_status='Pending Renewal Approval'");  
 		
 		ResultSet rs=stmt.executeQuery();  
 		

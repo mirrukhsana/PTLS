@@ -5,6 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>OneLogin PORTAL</title>
 
 <style type="text/css">
@@ -16,7 +17,10 @@
 
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: #fff;
+   background-image: url('../imgs/portals.jpg');
+  background-repeat:center center no-repeat;
+  background-attachment: fixed;
+  background-size: 100% 100%;
   color: #000;
   font-size: 15px;
   line-height: 1.5;
@@ -29,6 +33,7 @@ a {
 
 p, h3, h4 {
 	margin: 5px;
+	color:#BEBEBE;
 }
 
 ul {
@@ -113,7 +118,7 @@ ul {
 .showcase {
   width: 100%;
   height: 150px;
-  /* background: url('https://i.ibb.co/zGSDGCL/slide1.png') no-repeat center center/cover; */
+ Background-color:whit;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -125,6 +130,7 @@ ul {
 
 .showcase h2, .showcase p {
   margin-bottom: 10px;
+  color:#BEBEBE;
 }
 
 .showcase .btn {
@@ -146,6 +152,7 @@ ul {
 
 .home-cards h3 {
   margin-bottom: 5px;
+  color:#BEBEBE;
 }
 
 .home-cards a {
@@ -251,25 +258,7 @@ ul {
     <!-- Nav -->
     <nav class="main-nav">
       <img src="http://localhost:8080/PTLS/imgs/OneLogin.png" alt="OneLogin" class="logo">
-<!--  
-      <ul class="main-menu">
-        <li><a href="<%= request.getContextPath()%>/views/profile.jsp">My Profile (<%= request.getSession().getAttribute("aadhar")%>)</a></li>
-        <li><a href="<%=request.getContextPath()%>/login?param=logout">Logout</a></li>
-      </ul>
 
-      <ul class="right-menu">
-        <li>
-          <a href="#">
-            <i class="fas fa-search"></i>
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <i class="fas fa-shopping-cart"></i>
-          </a>
-        </li>
-      </ul>
-      -->
     </nav>
 
     <!-- Showcase -->
@@ -282,7 +271,7 @@ ul {
 
     <!-- Home cards 1 -->
     <section class="home-cards">
-      <div style="border-style: outset;">
+      <div style="border-style: solid; border-radius: 7px;">
         <a href="<%= request.getContextPath()%>/views/ptlshome.jsp"><img src="http://localhost:8080/PTLS/imgs/PTLSlogo.png" alt=""></a>
         <h4>Public Transport Licensing System</h4>
         <p>
@@ -290,8 +279,8 @@ ul {
           MINISTRY OF ROAD TRANSPORT & HIGHWAYS
         </p>
       </div>
-      <div style="border-style: outset;">
-       <a href="../imgs/inProgress.jpg"> <img src="http://localhost:8080/PTLS/imgs/PassportLogo.png" alt="" ></a>
+      <div style="border-style: inset;">
+       <a href="../imgs/inProgress.jpg"> <img src="http://localhost:8080/PTLS/imgs/PassportLogo.png" alt="Passprt Service" ></a>
         <h3>Passport Seva</h3>
         <p>
           PSP Division
@@ -299,11 +288,19 @@ ul {
         </p>
       </div>
       <div style="border-style: outset;">
-        <a href="../imgs/inProgress.jpg"><img src="http://localhost:8080/PTLS/imgs/JKJobs.png" alt="" /></a>
+        <a href="../imgs/inProgress.jpg"><img src="http://localhost:8080/PTLS/imgs/JKJobs.png" alt="JKjobs service" /></a>
         <h3>J&K Jobs</h3>
         <p>
           Government of India.
           MINISTRY OF Labour & Employment
+        </p>
+      </div>
+      <div style="border-style: outset;">
+        <a href="../imgs/inProgress.jpg"><img src="http://localhost:8080/PTLS/imgs/Pan1.png" alt="PAN service" /></a>
+        <h3>J&K Jobs</h3>
+        <p>
+          Government of India.
+          MINISTRY OF FINANCE
         </p>
       </div>
     </section>
